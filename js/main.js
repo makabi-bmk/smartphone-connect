@@ -18,6 +18,7 @@ window.onload = function() {
 
 con.onmessage = function(res) {
     var resList = JSON.parse(res.data);
+    console.log("res = " + res.data);
     switch(resList['code']) {
         case 0:
             ID = resList['ID'];
@@ -26,7 +27,6 @@ con.onmessage = function(res) {
             console.log(resList);
             break;
     }
-    console.log(resList);
 };
 
 /*
@@ -87,5 +87,6 @@ var sendSensorData = function() {
 function sendData(code, data) {
     data['code'] = code;
     data['ID'] = ID;
+    console.log('送るデータ:' + JSON.stringify(data));
     con.send(JSON.stringify(data));
 }
