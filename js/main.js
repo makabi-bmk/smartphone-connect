@@ -4,7 +4,7 @@ window.onload = function() {
         
         con.onopen = function() {
             console.log('coを開始しました');
-            con.send('Hello WebSocket!');
+            con.send('Hello WebSocket!_smartphone');
         };
 
         con.onmessage = function(msg) {
