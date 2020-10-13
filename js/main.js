@@ -1,10 +1,10 @@
+const con = new WebSocket('ws://localhost:8081/');
+
 window.onload = function() {
-    try {
-        const con = new WebSocket('ws://localhost:8081/');
-        
+    // try {
         con.onopen = function() {
             console.log('coを開始しました');
-            con.send('Hello WebSocket!_smartphone');
+            con.send('smartphone');
         };
 
         con.onmessage = function(msg) {
@@ -13,7 +13,7 @@ window.onload = function() {
         };
         // con.close();
 
-    } catch (error) {
-        console.log(error);
-    }
-}
+    // } catch (error) {
+    //     console.log(error);
+    // }
+};
