@@ -9,8 +9,18 @@ ws.on('connection', socket => {
 
   socket.on('message', ms => {
     console.log(ms);
+
+    var data = JSON.parse(ms);
+    var res = {};
+
+    switch(data['code']) {
+      case 0:
+        res['ID'] = ID;
+        ID++;
+      break;
+    }
+
     socket.send("hello from server");
-    socket.send("ID:" + ID);
     ID++;
   });
 
