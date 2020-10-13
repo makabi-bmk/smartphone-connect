@@ -1,19 +1,19 @@
 const con = new WebSocket('ws://localhost:8081/');
 
-window.onload = function() {
-    try {
-        con.onopen = function() {
+try {
+    const con = new WebSocket('ws://localhost:8081/');
+    
+    con.onopen = function() {
         console.log('coを開始しました');
-        con.send('from_smartphone');
-        };
+        con.send('Hello WebSocket!');
+    };
 
-        con.onmessage = function(msg) {
-            alert(msg.data);
-            console.log(msg.data);
-        };
-        // con.close();
-        
-    } catch(error) {
-        console.log(error);
-    }
-};
+    con.onmessage = function(msg) {
+        alert(msg.data);
+        console.log(msg.data);
+    };
+    // con.close();
+
+} catch (error) {
+    console.log(error);
+}
