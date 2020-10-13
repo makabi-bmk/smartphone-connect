@@ -1,8 +1,7 @@
-const con = new WebSocket('ws://172.20.10.5:8081/');
+const con = new WebSocket('ws://localhost:8081/');
 var ID;
 
 try {
-    const con = new WebSocket('ws://172.20.10.5:8081/');
     
     con.onopen = function() {
         console.log('coを開始しました');
