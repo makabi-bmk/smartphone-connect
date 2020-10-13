@@ -8,7 +8,7 @@ ws.on('connection', socket => {
 
   socket.on('message', ms => {
     console.log(ms);
-    socket.send("hello from server");
+    socket.send(ms);
   });
 
   socket.on('close', () => {
