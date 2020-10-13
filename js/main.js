@@ -2,18 +2,8 @@ const con = new WebSocket('ws://localhost:8081/');
 var ID = 0;
 
 window.onload = function() {
-    try {
-        con.onopen = function() {
-            console.log('coを開始しました');
-            data = {};
-            sendData(0, data);
-            // con.send('Hello WebSocket!');
-        };
-        // con.close();
-    
-    } catch (error) {
-        console.log(error);
-    }
+    data = {};
+    sendData(0, data);
 };
 
 con.onmessage = function(res) {
@@ -88,5 +78,16 @@ function sendData(code, data) {
     data['code'] = code;
     data['ID'] = ID;
     console.log('送るデータ:' + JSON.stringify(data));
-    con.send(JSON.stringify(data));
+
+    try {
+        con.onopen = function() {
+            console.log('coを開始しました');
+            data = {};
+            con.send(JSON.stringify(data));
+            // con.send('Hello WebSocket!');
+        };
+        // con.close();
+    } catch (error) {
+        console.log(error);
+    }
 }
