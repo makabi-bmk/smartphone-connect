@@ -9,13 +9,20 @@ ws.on('connection', socket => {
 
   socket.on('message', ms => {
 
-    var data = JSON.parse(ms);
-    console.log("data = " + data);
-    console.log("code = " + data["code"]);
+    console.log("ms = " + ms);
+    var data;
+    try {
+      data = JSON.parse(ms);
+      console.log("data = " + data);
+    } catch(e) {
+      console.log("e = " + e);
+      data = {"code":0,"ID":0};
+    }
+    
     var res = {};
 
     // var code = parseInt(data["code"])
-    switch(code) {
+    switch(data[code]) {
       case '0':
         res['code'] = 0;
         socket.send(res);
