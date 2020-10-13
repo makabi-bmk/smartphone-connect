@@ -18,7 +18,7 @@ window.onload = function() {
     }
     sendData(1, data);
 
-    setTimeout(sendSensorData, 100);
+    setInterval(sendSensorData, 100);
 };
 
 con.onmessage = function(res) {
