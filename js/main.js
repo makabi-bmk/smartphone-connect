@@ -7,7 +7,7 @@ window.onload = function() {
     try {
         con.onopen = function() {
             console.log('coを開始しました');
-            data['code'] = 0;
+            data['code'] = '0';
             con.send(JSON.stringify(data));
             // sendData(0, data);
         };
@@ -29,7 +29,7 @@ window.onload = function() {
     } catch (error) {
         console.log(error);
     }
-    sendData(0, data);
+    sendData('1', data);
 };
 
 con.onmessage = function(res) {

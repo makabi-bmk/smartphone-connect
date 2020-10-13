@@ -8,17 +8,19 @@ ws.on('connection', socket => {
   console.log('connected!');
 
   socket.on('message', ms => {
-    console.log(ms);
 
     var data = JSON.parse(ms);
+    console.log("data = " + data);
+    console.log("code = " + data["code"]);
     var res = {};
 
-    switch(data['code']) {
-      case 0:
+    // var code = parseInt(data["code"])
+    switch(code) {
+      case '0':
         res['code'] = 0;
         socket.send(res);
         break;
-      case 1:
+      case '1':
         res['ID'] = ID;
         ID++;
       break;
