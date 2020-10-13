@@ -6,19 +6,6 @@ window.onload = function() {
     sendData(0, data);
 };
 
-con.onmessage = function(res) {
-    var resList = JSON.parse(res.data);
-    console.log("res = " + res.data);
-    switch(resList['code']) {
-        case 0:
-            ID = resList['ID'];
-            break;
-        case 1:
-            console.log(resList);
-            break;
-    }
-};
-
 /*
 try {
     
@@ -86,6 +73,20 @@ function sendData(code, data) {
             con.send(JSON.stringify(data));
             // con.send('Hello WebSocket!');
         };
+
+        con.onmessage = function(res) {
+            var resList = JSON.parse(res.data);
+            console.log("res = " + res.data);
+            switch(resList['code']) {
+                case 0:
+                    ID = resList['ID'];
+                    break;
+                case 1:
+                    console.log(resList);
+                    break;
+            }
+        };
+
         // con.close();
     } catch (error) {
         console.log(error);
