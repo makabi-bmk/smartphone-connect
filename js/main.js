@@ -30,7 +30,7 @@ window.onload = function() {
     } catch (error) {
         console.log(error);
     }
-    // sendData('1', data);
+    sendData('1', data);
 };
 
 con.onmessage = function(res) {
@@ -42,6 +42,7 @@ con.onmessage = function(res) {
             break;
         case 1:
             ID = resList['ID'];
+            alert("IDは" + ID + "です");
             console.log('ID = ' + ID);
             break;
     }
