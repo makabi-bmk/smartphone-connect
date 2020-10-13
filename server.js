@@ -15,13 +15,14 @@ ws.on('connection', socket => {
 
     switch(data['code']) {
       case 0:
+        socket.send("hello from server");
+        break;
+      case 1:
         res['ID'] = ID;
         ID++;
       break;
     }
 
-    socket.send("hello from server");
-    ID++;
   });
 
   socket.on('close', () => {

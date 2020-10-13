@@ -3,6 +3,30 @@ var ID = 0;
 
 window.onload = function() {
     data = {};
+
+    try {
+        con.onopen = function() {
+            console.log('coを開始しました');
+            con.send(0, JSON.stringify(data));
+        };
+
+        con.onmessage = function(res) {
+            var resList = JSON.parse(res.data);
+            console.log("res = " + res.data);
+            switch(resList['code']) {
+                case 0:
+                    console.log(res.data);
+                    break;
+                case 1:
+                    ID = resList['ID'];
+                    console.log('ID = ' + ID);
+                    break;
+            }
+        };
+        // con.close();
+    } catch (error) {
+        console.log(error);
+    }
     sendData(0, data);
 };
 
@@ -67,21 +91,18 @@ function sendData(code, data) {
     console.log('送るデータ:' + JSON.stringify(data));
 
     try {
-        con.onopen = function() {
-            console.log('coを開始しました');
-            con.send(JSON.stringify(data));
-            // con.send('Hello WebSocket!');
-        };
+        con.send(JSON.stringify(data));
 
         con.onmessage = function(res) {
             var resList = JSON.parse(res.data);
             console.log("res = " + res.data);
             switch(resList['code']) {
                 case 0:
-                    ID = resList['ID'];
+                    console.log(res.data);
                     break;
                 case 1:
-                    console.log(resList);
+                    ID = resList['ID'];
+                    console.log('ID = ' + ID);
                     break;
             }
         };
