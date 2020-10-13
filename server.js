@@ -2,13 +2,16 @@
 
 const server = require('ws').Server;
 const ws = new server({ port: 8081 });
+var ID = 0;
 
 ws.on('connection', socket => {
   console.log('connected!');
 
   socket.on('message', ms => {
     console.log(ms);
-    socket.send(ms);
+    socket.send("hello from server");
+    socket.send("ID:" + ID);
+    ID++;
   });
 
   socket.on('close', () => {
