@@ -10,24 +10,38 @@ window.onload = function() {
             con.send(0, JSON.stringify(data));
         };
 
-        con.onmessage = function(res) {
-            var resList = JSON.parse(res.data);
-            console.log("res = " + res.data);
-            switch(resList['code']) {
-                case 0:
-                    console.log(res.data);
-                    break;
-                case 1:
-                    ID = resList['ID'];
-                    console.log('ID = ' + ID);
-                    break;
-            }
-        };
+        // con.onmessage = function(res) {
+        //     var resList = JSON.parse(res.data);
+        //     console.log("res = " + res.data);
+        //     switch(resList['code']) {
+        //         case 0:
+        //             console.log(res.data);
+        //             break;
+        //         case 1:
+        //             ID = resList['ID'];
+        //             console.log('ID = ' + ID);
+        //             break;
+        //     }
+        // };
         // con.close();
     } catch (error) {
         console.log(error);
     }
     sendData(0, data);
+};
+
+con.onmessage = function(res) {
+    var resList = JSON.parse(res.data);
+    console.log("res = " + res.data);
+    switch(resList['code']) {
+        case 0:
+            console.log("res = " + res.data);
+            break;
+        case 1:
+            ID = resList['ID'];
+            console.log('ID = ' + ID);
+            break;
+    }
 };
 
 /*
@@ -92,21 +106,6 @@ function sendData(code, data) {
 
     try {
         con.send(JSON.stringify(data));
-
-        con.onmessage = function(res) {
-            var resList = JSON.parse(res.data);
-            console.log("res = " + res.data);
-            switch(resList['code']) {
-                case 0:
-                    console.log(res.data);
-                    break;
-                case 1:
-                    ID = resList['ID'];
-                    console.log('ID = ' + ID);
-                    break;
-            }
-        };
-
         // con.close();
     } catch (error) {
         console.log(error);

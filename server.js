@@ -15,7 +15,8 @@ ws.on('connection', socket => {
 
     switch(data['code']) {
       case 0:
-        socket.send("hello from server");
+        res['code'] = 0;
+        socket.send(res);
         break;
       case 1:
         res['ID'] = ID;
