@@ -30,7 +30,7 @@ window.onload = function() {
     } catch (error) {
         console.log(error);
     }
-    sendData('1', data);
+    sendData(1, data);
 };
 
 con.onmessage = function(res) {
