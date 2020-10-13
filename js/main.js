@@ -7,7 +7,9 @@ window.onload = function() {
     try {
         con.onopen = function() {
             console.log('coを開始しました');
-            con.send(0, JSON.stringify(data));
+            data['code'] = 0;
+            con.send(JSON.stringify(data));
+            // sendData(0, data);
         };
 
         // con.onmessage = function(res) {
