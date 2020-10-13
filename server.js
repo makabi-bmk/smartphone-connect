@@ -24,6 +24,9 @@ ws.on('connection', socket => {
         res['ID'] = ID;
         ID++;
       break;
+      case 2:
+        console.log('data = ' + data['acceleration_x']);
+        break;
     }
     socket.send(JSON.stringify(res));
 
