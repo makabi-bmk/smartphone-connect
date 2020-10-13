@@ -69,7 +69,6 @@ function sendData(code, data) {
     try {
         con.onopen = function() {
             console.log('coを開始しました');
-            data = {};
             con.send(JSON.stringify(data));
             // con.send('Hello WebSocket!');
         };
