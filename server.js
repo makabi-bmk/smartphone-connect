@@ -2,7 +2,8 @@
 
 const server = require('ws').Server;
 const ws = new server({ port: 8081 });
-var ID = 0;
+//IDは各クライアントでの初期値を0とするため1から始める
+var ID = 1;
 
 ws.on('connection', socket => {
   console.log('connected!');
