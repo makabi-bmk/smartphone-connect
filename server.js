@@ -5,6 +5,21 @@ const ws = new server({ port: 8081 });
 //IDは各クライアントでの初期値を0とするため1から始める
 var ID = 1;
 
+const SENSOR_FORMAT = {
+  alpha : 0,
+  beta : 0,
+  gamma : 0,
+  acceleration_x : 0,
+  acceleration_y : 0,
+  acceleration_z : 0
+};
+
+var sensorDataList = []
+for (var i = 0; i < 50; i++) {
+  sensorDataList.push(...SENSOR_FORMAT);
+}
+
+
 ws.on('connection', socket => {
   console.log('connected!');
 
@@ -26,9 +41,18 @@ ws.on('connection', socket => {
         ID++;
       break;
       case 2:
-        console.log('data = ' + data['acceleration_x']);
+        var userID = data['ID'];
+        sensorDataList[userID].alpha = data['alpha'];
+        sensorDataList[userID].beta = data['beta'];
+        sensorDataList[userID].gamma = data['gamma'];
+        sensorDataList[userID].acceleration_x = data['acceleration_x'];
+        sensorDataList[userID].acceleration_y = data['acceleration_y'];
+        sensorDataList[userID].acceleration_z = data['acceleration_z'];
+        
+        console.log('data = ' + sensorDataList[userID].acceleration_x);
         break;
     }
+
     socket.send(JSON.stringify(res));
 
   });

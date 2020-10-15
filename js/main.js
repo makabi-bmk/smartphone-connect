@@ -1,6 +1,15 @@
 const con = new WebSocket('ws://localhost:8081/');
 var ID = 0;
 
+const SENSOR_FORMAT = {
+    alpha : 0,
+    beta : 0,
+    gamma : 0,
+    acceleration_x : 0,
+    acceleration_y : 0,
+    acceleration_z : 0
+};
+
 window.onload = function() {
     data = {};
 
@@ -36,6 +45,7 @@ con.onmessage = function(res) {
         case 2:
             console.log("データを送った");
             break;
+
     }
 };
 
