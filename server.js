@@ -16,7 +16,7 @@ const SENSOR_FORMAT = {
 
 var sensorDataList = []
 for (var i = 0; i < 50; i++) {
-  sensorDataList.push(...SENSOR_FORMAT);
+  sensorDataList.push(Object.create(SENSOR_FORMAT));
 }
 
 
@@ -51,6 +51,14 @@ ws.on('connection', socket => {
         
         console.log('data = ' + sensorDataList[userID].acceleration_x);
         break;
+      
+      case 3:
+        var userID = data['ID'];
+        if (0 < userID && userID <= 50) {
+          res['alpha'] = sensorDataList[userID].alpha;
+        } else {
+          res['alpha'] = 0;
+        }
     }
 
     socket.send(JSON.stringify(res));
