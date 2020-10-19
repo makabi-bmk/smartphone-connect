@@ -69,12 +69,6 @@ ws.on('connection', socket => {
         sensorDataList[userID].text = data['text'];
         break;
 
-      case 5:
-        var userID = data['ID'];
-        var text = sensorDataList[userID].text; 
-        res['text'] = text;
-        break;
-
     }
 
     socket.send(JSON.stringify(res));
