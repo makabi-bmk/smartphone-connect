@@ -25,6 +25,7 @@ window.onload = function() {
     } catch (error) {
         console.log(error);
     }
+
     sendData(1, data);
 
     setInterval(sendSensorData, 100);
@@ -53,8 +54,8 @@ con.onmessage = function(res) {
         
         case 5:
             var text = document.getElementById("text");
-            if (text != "")
-                text.innerHTML = resList['text'];
+            if (resList[text] != "")
+                text.innerHTML = resList[text];
             break;
     }
 };
