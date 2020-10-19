@@ -28,3 +28,7 @@ h1 {
     margin: 0;
     padding: 0;
 }
+
+#robot_image {
+    width: 100%;
+}
