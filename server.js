@@ -33,6 +33,7 @@ ws.on('connection', socket => {
 
     var code = data["code"];
     res["code"] = code;
+
     switch(data["code"]) {
       case 0:
         break;
@@ -40,6 +41,7 @@ ws.on('connection', socket => {
         res['ID'] = ID;
         ID++;
       break;
+
       case 2:
         var userID = data['ID'];
         sensorDataList[userID].alpha = data['alpha'];
@@ -59,6 +61,13 @@ ws.on('connection', socket => {
         } else {
           res['alpha'] = 0;
         }
+        break;
+      
+      case 4:
+        var userID = data['ID'];
+        res['text'] = data['text'];
+        break;
+
     }
 
     socket.send(JSON.stringify(res));

@@ -41,11 +41,19 @@ con.onmessage = function(res) {
             ID = resList['ID'];
             alert("IDは" + ID + "です");
             console.log('ID = ' + ID);
+            
+            var IDtext = document.getElementById("ID");
+            IDtext.innerHTML = "ID : " + ID;
+
             break;
         case 2:
             console.log("データを送った");
             break;
-
+        
+        case 4:
+            var text = document.getElementById("text");
+            text.innerHTML = resList['text'];
+            break;
     }
 };
 
