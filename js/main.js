@@ -28,8 +28,8 @@ window.onload = function() {
 
     sendData(1, data);
 
-    setInterval(sendSensorData, 100);
-    setInterval(getText, 100);
+    setInterval(sendSensorData, 1000);
+    setInterval(getText, 1000);
 };
 
 con.onmessage = function(res) {
