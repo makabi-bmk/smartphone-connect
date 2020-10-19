@@ -11,7 +11,8 @@ const SENSOR_FORMAT = {
   gamma : 0,
   acceleration_x : 0,
   acceleration_y : 0,
-  acceleration_z : 0
+  acceleration_z : 0,
+  text : ""
 };
 
 var sensorDataList = []
@@ -65,7 +66,13 @@ ws.on('connection', socket => {
       
       case 4:
         var userID = data['ID'];
-        res['text'] = data['text'];
+        sensorDataList[userID].text = data['text'];
+        break;
+
+      case 5:
+        var userID = data['ID'];
+        var text = sensorDataList[userID].text; 
+        res['text'] = text;
         break;
 
     }

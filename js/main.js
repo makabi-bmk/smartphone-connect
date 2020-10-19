@@ -28,6 +28,7 @@ window.onload = function() {
     sendData(1, data);
 
     setInterval(sendSensorData, 100);
+    setInterval(getText, 100);
 };
 
 con.onmessage = function(res) {
@@ -50,9 +51,10 @@ con.onmessage = function(res) {
             console.log("データを送った");
             break;
         
-        case 4:
+        case 5:
             var text = document.getElementById("text");
-            text.innerHTML = resList['text'];
+            if (text != "")
+                text.innerHTML = resList['text'];
             break;
     }
 };
@@ -88,6 +90,11 @@ var sendSensorData = function() {
         'acceleration_z' : acceleration_z
     };
     sendData(2, data);
+};
+
+var getText = function() {
+    data = {};
+    sendData(5, data);
 };
 
 function sendData(code, data) {
