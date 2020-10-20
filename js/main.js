@@ -7,7 +7,9 @@ const SENSOR_FORMAT = {
     gamma : 0,
     acceleration_x : 0,
     acceleration_y : 0,
-    acceleration_z : 0
+    acceleration_z : 0,
+    message  : "",
+    image : 0
 };
 
 window.onload = function() {
@@ -48,7 +50,8 @@ con.onmessage = function(res) {
 
             break;
         case 2:
-            console.log("データを送った");
+            var messageText = document.getElementById('text');
+            messageText.innerHTML = resList['message'];
             break;
         
     }

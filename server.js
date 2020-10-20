@@ -12,7 +12,8 @@ const SENSOR_FORMAT = {
   acceleration_x : 0,
   acceleration_y : 0,
   acceleration_z : 0,
-  text : ""
+  message : "Hello World!",
+  image : 0
 };
 
 var sensorDataList = []
@@ -53,6 +54,9 @@ ws.on('connection', socket => {
         sensorDataList[userID].acceleration_z = data['acceleration_z'];
         
         console.log('data = ' + sensorDataList[userID].acceleration_x);
+
+        res['message'] = sensorDataList[userID].text;
+
         break;
       
       case 3:
@@ -66,9 +70,8 @@ ws.on('connection', socket => {
       
       case 4:
         var userID = data['ID'];
-        sensorDataList[userID].text = data['text'];
+        sensorDataList[userID].message = data['message'];
         break;
-
     }
 
     socket.send(JSON.stringify(res));
