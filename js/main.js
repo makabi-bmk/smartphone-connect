@@ -50,7 +50,7 @@ con.onmessage = function(res) {
 
             break;
         case 2:
-            var messageText = document.getElementById('text');
+            var messageText = document.getElementById('message');
             messageText.innerHTML = resList['message'];
             break;
         
