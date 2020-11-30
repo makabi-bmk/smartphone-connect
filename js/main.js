@@ -1,15 +1,22 @@
 const con = new WebSocket('ws://localhost:8081/');
 var ID = 0;
 
-const SENSOR_FORMAT = {
+var DATA = {
+    ID : 0,
+    request_code : 0,
     alpha : 0,
     beta : 0,
     gamma : 0,
     acceleration_x : 0,
     acceleration_y : 0,
     acceleration_z : 0,
-    message  : "",
-    image : 0
+    image_num  : 0,
+    voice_message : "",
+    tap_x : 0,
+    tap_y : 0,
+    swipe_vertical : false,
+    swipe_horizontal : false,
+    swipe_diagonal : false
 };
 
 window.onload = function() {
