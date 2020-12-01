@@ -45,6 +45,7 @@ ws.on('connection', socket => {
     var clientID = data["ID"];
     var type = data["type"];
 
+    //スマホからのリクエスト
     if (type == 0) {
       switch(request_num) {
         case 0:
@@ -57,13 +58,13 @@ ws.on('connection', socket => {
 
         case 2:
           setData(clientID, data);
-          console.log('data = ' + clientList[clientID]);
           res = clientList[clientID];
           break;
       }
     }
 
-    else {
+    //scratchからのリクエスト
+    else if (type == 1) {
       switch(request_num) {
         case 3:
           if (0 < clientID && clientID <= 50) {
