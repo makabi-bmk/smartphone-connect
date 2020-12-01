@@ -16,3 +16,5 @@ var data = {
     swipe_vertical : false,
     swipe_horizontal : false
 };
+
+var response = {};

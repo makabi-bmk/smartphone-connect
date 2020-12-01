@@ -1,7 +1,6 @@
 const con = new WebSocket('ws://localhost:8081/');
 
 window.onload = function() {
-
     try {
         con.onopen = function() {
             console.log('coを開始しました');
@@ -9,7 +8,6 @@ window.onload = function() {
     } catch (error) {
         console.log(error);
     }
-
     sendData(1);
     setInterval(sendSensorData, 3000);
 };

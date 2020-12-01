@@ -1,3 +1,5 @@
+//TODO: イベントを発生させた後フラグを0に戻す
+
 //画像を変更する
 function changeImage(image_num) {
     document.getElementById("image").src = "../image/image" + image_num + ".png";
