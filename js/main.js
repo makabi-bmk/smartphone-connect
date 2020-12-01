@@ -20,7 +20,6 @@ var data = {
 };
 
 window.onload = function() {
-    data = {};
 
     try {
         con.onopen = function() {
@@ -31,7 +30,7 @@ window.onload = function() {
         console.log(error);
     }
 
-    sendData(1, data);
+    sendData(1);
     setInterval(sendSensorData, 1000);
 };
 
@@ -59,20 +58,11 @@ con.onmessage = function(res) {
     }
 };
 
-/*
-var alpha = 0;
-var beta = 0;
-var gamma = 0;
-var acceleration_x = 0;
-var acceleration_y = 0;
-var acceleration_z = 0;
-*/
-
 // デバイスの方向の変化を検出したとき
 window.addEventListener('deviceorientation', function(e) {
-    alpha = e.alpha;
-    beta = e.beta;
-    gamma = e.gamma;
+    data.alpha = e.alpha;
+    data.beta = e.beta;
+    data.gamma = e.gamma;
 });
 
 // デバイスの加速度の変化を検出したとき
@@ -83,21 +73,11 @@ window.addEventListener('deviceorientation', function(e) {
 });
 
 var sendSensorData = function() {
-    /*
-    var data = {
-        'alpha': alpha,
-        'beta' : beta,
-        'gamma' : gamma,
-        'acceleration_x' : acceleration_x,
-        'acceleration_y' : acceleration_y,
-        'acceleration_z' : acceleration_z
-    };
-    */
     sendData(2);
 };
 
 function sendData(code) {
-    data.code = code;
+    data.request_code = code;
     console.log('送るデータ:' + JSON.stringify(data));
 
     try {
