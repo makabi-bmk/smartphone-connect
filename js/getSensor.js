@@ -32,7 +32,7 @@ window.addEventListener('devicemotion', function(e) {
     data.acceleration_z = e.acceleration.z;
 });
 
-
+//TODO: event.preventDefault()が動かないのと、縦方向のスワイプが検出できない
 var touchStartX;
 var touchStartY;
 var touchMoveX;
@@ -70,4 +70,4 @@ window.addEventListener("touchend", function(event) {
         //下から上に指が移動した場合
         data.swipe_vertical = true;
     }
-}, false);
+}, { passive: false });
