@@ -39,6 +39,7 @@ window.addEventListener('devicemotion', function(e) {
 */
 
 //画面をタッチしたとき
+/*
 var body = document.getElementById("body");
 body.addEventListener("touchstart", function(event) {
     data.tap_x = event.changedTouches[0].pageX;
@@ -53,5 +54,45 @@ image.addEventListener("touchstart", function(event) {
     /*
     data.tap_x = event.changedTouches[0].pageX;
     data.tap_y = event.changedTouches[0].pageY;
-    */
+    
+}, false);
+*/
+
+window.addEventListener("load", function(event) {
+    var touchStartX;
+    var touchStartY;
+    var touchMoveX;
+    var touchMoveY;
+ 
+    // 開始時
+    window.addEventListener("touchstart", function(event) {
+    event.preventDefault();
+    // 座標の取得
+    touchStartX = data.tap_x = event.touches[0].pageX;
+    touchStartY = data.tap_y = event.touches[0].pageY;
+    }, false);
+ 
+    // 移動時
+    window.addEventListener("touchmove", function(event) {
+    event.preventDefault();
+    // 座標の取得
+    touchMoveX = event.changedTouches[0].pageX;
+    touchMoveY = event.changedTouches[0].pageY;
+    }, false);
+ 
+    // 終了時
+    window.addEventListener("touchend", function(event) {
+    // 移動量の判定
+    if (touchStartX > touchMoveX) {
+        if (touchStartX > (touchMoveX + 50)) {
+        //右から左に指が移動した場合
+        data.swipe_horizontal = true;
+        }
+    } else if (touchStartX < touchMoveX) {
+        if ((touchStartX + 50) < touchMoveX) {
+        //左から右に指が移動した場合
+        data.swipe_horizontal = true;
+        }
+    }
+    }, false);
 }, false);
