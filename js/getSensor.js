@@ -32,33 +32,7 @@ window.addEventListener('devicemotion', function(e) {
     data.acceleration_z = e.acceleration.z;
 });
 
-/*
-
-画面と画像のタッチがうごかん！！！！！！！！！！！！ないた！！！
-
-*/
-
-//画面をタッチしたとき
-/*
-var body = document.getElementById("body");
-body.addEventListener("touchstart", function(event) {
-    data.tap_x = event.changedTouches[0].pageX;
-    data.tap_y = event.changedTouches[0].pageY;
-}, false);
-
-// 画像をタッチしたとき
-var image = document.getElementById("robot_image");
-image.addEventListener("touchstart", function(event) {
-    //TODO: このフラグあとでfalseにする処理かく
-    data.image_touch = true;
-    /*
-    data.tap_x = event.changedTouches[0].pageX;
-    data.tap_y = event.changedTouches[0].pageY;
-    
-}, false);
-*/
-
-window.addEventListener("load", function(event) {
+//window.addEventListener("load", function(event) {
     var touchStartX;
     var touchStartY;
     var touchMoveX;
@@ -93,6 +67,16 @@ window.addEventListener("load", function(event) {
         //左から右に指が移動した場合
         data.swipe_horizontal = true;
         }
+    } else if (touchStartY > touchMoveY) {
+        if (touchStartY > (touchMoveY + 50)) {
+        //右から左に指が移動した場合
+        data.swipe_vertical = true;
+        }
+    } else if (touchStartY < touchMoveY) {
+        if ((touchStartY + 50) < touchMoveX) {
+        //左から右に指が移動した場合
+        data.swipe_vertical = true;
+        }
     }
     }, false);
-}, false);
+//}, false);
