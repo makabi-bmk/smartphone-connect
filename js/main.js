@@ -44,12 +44,12 @@ con.onmessage = function(res) {
             console.log("res = " + res.data);
             break;
         case 1:
-            ID = resList['ID'];
-            alert("IDは" + ID + "です");
-            console.log('ID = ' + ID);
+            data.ID = resList['ID'];
+            alert("IDは" + data.ID + "です");
+            console.log('ID = ' + data.ID);
             
             var IDtext = document.getElementById("ID");
-            IDtext.innerHTML = "ID : " + ID;
+            IDtext.innerHTML = "ID : " + data.ID;
 
             break;
         case 2:
