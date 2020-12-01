@@ -18,6 +18,7 @@ var data = {
   voice_message : "",
   tap_x : 0,
   tap_y : 0,
+  image_touch : false,
   swipe_vertical : false,
   swipe_horizontal : false,
   swipe_diagonal : false
@@ -101,6 +102,7 @@ function setData(clientID, data) {
   clientList[clientID].voice_message    = data["voice_message"];
   clientList[clientID].tap_x            = data["tap_x"];
   clientList[clientID].tap_y            = data["tap_y"];
+  clientList[clientID].image_touch      = data["image_touch"]
   clientList[clientID].swipe_vertical   = data["swipe_vertical"];
   clientList[clientID].swipe_horizontal = data["swipe_horizontal"];
   clientList[clientID].swipe_diagonal   = data["swipe_diagonal"];

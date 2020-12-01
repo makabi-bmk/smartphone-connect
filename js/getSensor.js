@@ -12,6 +12,7 @@ var data = {
     voice_message : "",
     tap_x : 0,
     tap_y : 0,
+    image_touch : false,
     swipe_vertical : false,
     swipe_horizontal : false,
     swipe_diagonal : false
@@ -31,4 +32,20 @@ window.addEventListener('devicemotion', function(e) {
     data.acceleration_z = e.acceleration.z;
 });
 
-// スクリーンをタッチしたとき
+//画面をタッチしたとき
+var image = document.getElementById("body");
+image.addEventListener("touchstart", function(event) {
+    data.tap_x = event.changedTouches[0].pageX;
+    data.tap_y = event.changedTouches[0].pageY;
+}, false);
+
+// 画像をタッチしたとき
+var image = document.getElementById("image");
+image.addEventListener("touchstart", function(event) {
+    //TODO: このフラグあとでfalseにする処理かく
+    data.image_touch = true;
+    /*
+    data.tap_x = event.changedTouches[0].pageX;
+    data.tap_y = event.changedTouches[0].pageY;
+    */
+}, false);
