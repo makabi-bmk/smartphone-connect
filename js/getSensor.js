@@ -33,8 +33,7 @@ window.addEventListener('devicemotion', function(e) {
 });
 
 //画面をタッチしたとき
-var image = document.getElementById("body");
-image.addEventListener("touchstart", function(event) {
+window.addEventListener("touchstart", function(event) {
     data.tap_x = event.changedTouches[0].pageX;
     data.tap_y = event.changedTouches[0].pageY;
 }, false);
