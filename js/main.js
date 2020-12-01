@@ -25,14 +25,13 @@ window.onload = function() {
     try {
         con.onopen = function() {
             console.log('coを開始しました');
-            sendData(1);
         };
     } catch (error) {
         console.log(error);
     }
 
     sendData(1);
-    setInterval(sendSensorData, 1000);
+    setInterval(sendSensorData, 10000);
 };
 
 con.onmessage = function(res) {
@@ -79,7 +78,12 @@ var sendSensorData = function() {
 };
 
 function sendData(code) {
-    data.request_num = code;
+
+    if (data.ID == 0) {
+        data.request_num = 1;
+    } else {
+        data.request_num = code;
+    }
     console.log('送るデータ:' + JSON.stringify(data));
 
     try {
@@ -88,4 +92,9 @@ function sendData(code) {
     } catch (error) {
         console.log(error);
     }
+}
+
+window.onbeforeunload = function(e) {
+    e.returnValue = "ページを離れようとしています。よろしいですか？";
+    con.close();
 }

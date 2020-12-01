@@ -2,6 +2,7 @@
 
 const server = require('ws').Server;
 const ws = new server({ port: 8081 });
+
 //IDは各クライアントでの初期値を0とするため1から始める
 var ID = 1;
 
@@ -49,12 +50,12 @@ ws.on('connection', socket => {
           break;
 
         case 1:
-          res['ID'] = ID;
+          res["ID"] = ID;
           ID++;
           break;
 
         case 2:
-          setData(clientID);
+          setData(clientID, data);
           console.log('data = ' + clientList[clientID]);
           res = clientList[clientID];
           break;
@@ -63,12 +64,6 @@ ws.on('connection', socket => {
 
     else {
       switch(request_num) {
-        case 2:
-          setData(clientID);
-          console.log('data = ' + clientList[clientID]);
-          res['message'] = clientList[clientID].text;
-          break;
-        
         case 3:
           if (0 < clientID && clientID <= 50) {
             res['alpha'] = clientList[clientID].alpha;
@@ -95,18 +90,18 @@ ws.on('connection', socket => {
   });
 });
 
-function setData(clientID) {
-  clientList[clientID].alpha = data["alpha"];
-  clientList[clientID].beta = data["beta"];
-  clientList[clientID].gamma = data["gamma"];
-  clientList[clientID].acceleration_x = data["acceleration_x"];
-  clientList[clientID].acceleration_y = data["acceleration_y"];
-  clientList[clientID].acceleration_z = data["acceleration_z"];
-  clientList[clientID].image_num = data["image_num"];
-  clientList[clientID].voice_message = data["voice_message"];
-  clientList[clientID].tap_x = data["tap_x"];
-  clientList[clientID].tap_y = data["tap_y"];
-  clientList[clientID].swipe_vertical = data["swipe_vertical"];
+function setData(clientID, data) {
+  clientList[clientID].alpha            = data["alpha"];
+  clientList[clientID].beta             = data["beta"];
+  clientList[clientID].gamma            = data["gamma"];
+  clientList[clientID].acceleration_x   = data["acceleration_x"];
+  clientList[clientID].acceleration_y   = data["acceleration_y"];
+  clientList[clientID].acceleration_z   = data["acceleration_z"];
+  clientList[clientID].image_num        = data["image_num"];
+  clientList[clientID].voice_message    = data["voice_message"];
+  clientList[clientID].tap_x            = data["tap_x"];
+  clientList[clientID].tap_y            = data["tap_y"];
+  clientList[clientID].swipe_vertical   = data["swipe_vertical"];
   clientList[clientID].swipe_horizontal = data["swipe_horizontal"];
-  clientList[clientID].swipe_diagonal = data["swipe_diagonal"];
+  clientList[clientID].swipe_diagonal   = data["swipe_diagonal"];
 }
