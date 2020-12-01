@@ -1,7 +1,7 @@
 const con = new WebSocket('ws://localhost:8081/');
 var ID = 0;
 
-var DATA = {
+var data = {
     ID : 0,
     request_code : 0,
     alpha : 0,
@@ -25,18 +25,13 @@ window.onload = function() {
     try {
         con.onopen = function() {
             console.log('coを開始しました');
-            data['code'] = 0;
-            console.log("送るデータ = " + JSON.stringify(data));
-            con.send(JSON.stringify(data));
-            // sendData(0, data);
+            sendData(0);
         };
-        // con.close();
     } catch (error) {
         console.log(error);
     }
 
     sendData(1, data);
-
     setInterval(sendSensorData, 1000);
 };
 
@@ -64,12 +59,14 @@ con.onmessage = function(res) {
     }
 };
 
+/*
 var alpha = 0;
 var beta = 0;
 var gamma = 0;
 var acceleration_x = 0;
 var acceleration_y = 0;
 var acceleration_z = 0;
+*/
 
 // デバイスの方向の変化を検出したとき
 window.addEventListener('deviceorientation', function(e) {
@@ -80,12 +77,13 @@ window.addEventListener('deviceorientation', function(e) {
 
 // デバイスの加速度の変化を検出したとき
   window.addEventListener('devicemotion', function(e) {
-    acceleration_x = e.acceleration.x;
-    acceleration_y = e.acceleration.y;
-    acceleration_z = e.acceleration.z;
+    data.acceleration_x = e.acceleration.x;
+    data.acceleration_y = e.acceleration.y;
+    data.acceleration_z = e.acceleration.z;
 });
 
 var sendSensorData = function() {
+    /*
     var data = {
         'alpha': alpha,
         'beta' : beta,
@@ -94,12 +92,12 @@ var sendSensorData = function() {
         'acceleration_y' : acceleration_y,
         'acceleration_z' : acceleration_z
     };
-    sendData(2, data);
+    */
+    sendData(2);
 };
 
-function sendData(code, data) {
-    data['code'] = code;
-    data['ID'] = ID;
+function sendData(code) {
+    data.code = code;
     console.log('送るデータ:' + JSON.stringify(data));
 
     try {
