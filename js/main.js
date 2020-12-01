@@ -3,7 +3,8 @@ var ID = 0;
 
 var data = {
     ID : 0,
-    request_code : 0,
+    type : 0,
+    request_num : 0,
     alpha : 0,
     beta : 0,
     gamma : 0,
@@ -24,7 +25,7 @@ window.onload = function() {
     try {
         con.onopen = function() {
             console.log('coを開始しました');
-            sendData(0);
+            sendData(1);
         };
     } catch (error) {
         console.log(error);
@@ -51,8 +52,9 @@ con.onmessage = function(res) {
 
             break;
         case 2:
-            var messageText = document.getElementById('message');
-            messageText.innerHTML = resList['message'];
+            console.log("res = " + res);
+            //var messageText = document.getElementById('message');
+            //messageText.innerHTML = resList['message'];
             break;
         
     }
@@ -77,7 +79,7 @@ var sendSensorData = function() {
 };
 
 function sendData(code) {
-    data.request_code = code;
+    data.request_num = code;
     console.log('送るデータ:' + JSON.stringify(data));
 
     try {
