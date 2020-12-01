@@ -32,6 +32,12 @@ window.addEventListener('devicemotion', function(e) {
     data.acceleration_z = e.acceleration.z;
 });
 
+/*
+
+画面と画像のタッチがうごかん！！！！！！！！！！！！ないた！！！
+
+*/
+
 //画面をタッチしたとき
 var body = document.getElementById("body");
 body.addEventListener("touchstart", function(event) {
@@ -40,7 +46,7 @@ body.addEventListener("touchstart", function(event) {
 }, false);
 
 // 画像をタッチしたとき
-var image = document.getElementById("image");
+var image = document.getElementById("robot_image");
 image.addEventListener("touchstart", function(event) {
     //TODO: このフラグあとでfalseにする処理かく
     data.image_touch = true;
