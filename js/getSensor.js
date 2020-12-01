@@ -32,51 +32,42 @@ window.addEventListener('devicemotion', function(e) {
     data.acceleration_z = e.acceleration.z;
 });
 
-//window.addEventListener("load", function(event) {
-    var touchStartX;
-    var touchStartY;
-    var touchMoveX;
-    var touchMoveY;
- 
-    // 開始時
-    window.addEventListener("touchstart", function(event) {
+
+var touchStartX;
+var touchStartY;
+var touchMoveX;
+var touchMoveY;
+
+// スワイプの開始(タップ)
+window.addEventListener("touchstart", function(event) {
     event.preventDefault();
     // 座標の取得
     touchStartX = data.tap_x = event.touches[0].pageX;
     touchStartY = data.tap_y = event.touches[0].pageY;
-    }, false);
- 
-    // 移動時
-    window.addEventListener("touchmove", function(event) {
+}, { passive: false });
+
+// タップの移動
+window.addEventListener("touchmove", function(event) {
     event.preventDefault();
     // 座標の取得
     touchMoveX = event.changedTouches[0].pageX;
     touchMoveY = event.changedTouches[0].pageY;
-    }, false);
- 
-    // 終了時
-    window.addEventListener("touchend", function(event) {
-    // 移動量の判定
-    if (touchStartX > touchMoveX) {
-        if (touchStartX > (touchMoveX + 50)) {
+}, { passive: false });
+
+// タップの終了時(スワイプの判定)
+window.addEventListener("touchend", function(event) {
+    if (touchStartX > touchMoveX && touchStartX > (touchMoveX + 50)) {
         //右から左に指が移動した場合
         data.swipe_horizontal = true;
-        }
-    } else if (touchStartX < touchMoveX) {
-        if ((touchStartX + 50) < touchMoveX) {
+    } else if (touchStartX < touchMoveX && (touchStartX + 50) < touchMoveX) {
         //左から右に指が移動した場合
         data.swipe_horizontal = true;
-        }
-    } else if (touchStartY > touchMoveY) {
-        if (touchStartY > (touchMoveY + 50)) {
-        //右から左に指が移動した場合
-        data.swipe_vertical = true;
-        }
-    } else if (touchStartY < touchMoveY) {
-        if ((touchStartY + 50) < touchMoveX) {
-        //左から右に指が移動した場合
-        data.swipe_vertical = true;
-        }
     }
-    }, false);
-//}, false);
+    if (touchStartY > touchMoveY && touchStartY > (touchMoveY + 50)) {
+        //上から下に指が移動した場合
+        data.swipe_vertical = true;
+    } else if (touchStartY < touchMoveY && (touchStartY + 50) < touchMoveY) {
+        //下から上に指が移動した場合
+        data.swipe_vertical = true;
+    }
+}, false);
