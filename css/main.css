@@ -2,7 +2,7 @@ body {
     z-index: 0;
 }
 
-#back_img {
+#back_image {
     z-index: -1;
     height: 100%;
 }
