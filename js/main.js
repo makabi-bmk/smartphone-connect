@@ -37,7 +37,9 @@ window.onload = function() {
 con.onmessage = function(res) {
     var resList = JSON.parse(res.data);
     console.log("res = " + res.data);
-    switch(resList['code']) {
+
+    var request_num = resList["request_num"];
+    switch(request_num) {
         case 0:
             console.log("res = " + res.data);
             break;
