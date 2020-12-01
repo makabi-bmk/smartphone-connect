@@ -11,6 +11,7 @@ function changeBackImage(image_num) {
 }
 
 //画像の大きさを変更する(px)
+//TODO: ここpxじゃだめなんだよ～～%がいいよね～～～
 function changeImageSize(size) {
     var img = document.getElementById("image");
     var orgWidth  = img.width;
