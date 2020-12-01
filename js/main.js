@@ -31,7 +31,7 @@ window.onload = function() {
     }
 
     sendData(1);
-    setInterval(sendSensorData, 10000);
+    setInterval(sendSensorData, 3000);
 };
 
 con.onmessage = function(res) {
