@@ -1,5 +1,6 @@
 // index.js
 
+const header = require("./js/header.js");
 const server = require('ws').Server;
 const ws = new server({ port: 8081 });
 
@@ -22,7 +23,7 @@ ws.on('connection', socket => {
     console.log("request_num = " + data["request_num"]);
 
     var request_num = data["request_num"];
-    res["request_num"] = request_num;
+    res["re_num"] = request_num;
     var clientID = data["ID"];
     var type = data["type"];
 
@@ -39,7 +40,8 @@ ws.on('connection', socket => {
 
         case 2:
           setData(clientID, data);
-          res = clientList[clientID];
+          res = Object.create(header.response);
+
           break;
       }
     }

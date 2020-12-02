@@ -17,7 +17,7 @@ var data = {
     swipe_horizontal : false
 };
 
-var response = {
+module.exports.response = {
     flag : 0,
     response_num : 0,
     image_num : 0,
@@ -28,4 +28,7 @@ var response = {
     message : "",
     alert_message : "",
     bgm_num : 0,
+    pos_x : 0,
+    pos_y : 0,
+    size : 0
 };

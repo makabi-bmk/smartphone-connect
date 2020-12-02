@@ -21,20 +21,12 @@ function changeImageSize(size) {
 }
 
 //画像の場所を移動させる
+//片方の値のみしか移動させたくない場合は-1を代入すればよいのでは？
 function changeImagePosition(posX, posY) {
     var img = document.getElementById("image");
     img.style.position = "absolute";
-    img.style.top = posX + "px";
-}
-function changeImagePositionX(posX) {
-    var img = document.getElementById("image");
-    img.style.position = "absolute";
-    img.style.top = posX + "px";
-}
-function changeImagePositionY(posY) {
-    var img = document.getElementById("image");
-    img.style.position = "absolute";
-    img.style.left = posY + "px";   
+    if (posX < 0) img.style.top = posX + "px";
+    if (posY < 0) img.style.left = posY + "px";
 }
 
 //吹き出しの文字を変更させる
@@ -57,7 +49,7 @@ function playAudio(bgmNum) {
 }
 
 //全ての設定をリセットする
-function reset(clientID) {
+function reset() {
     data.alpha = 0;
     data.beta = 0;
     data.acceleration_x = 0;

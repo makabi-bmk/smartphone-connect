@@ -12,17 +12,17 @@ window.onload = function() {
     setInterval(sendSensorData, 3000);
 };
 
-con.onmessage = function(res) {
-    var resList = JSON.parse(res.data);
-    console.log("res = " + res.data);
+con.onmessage = function(message) {
+    var response = JSON.parse(message.data);
+    console.log("res = " + message.data);
 
-    var request_num = resList["request_num"];
+    var request_num = response["request_num"];
     switch(request_num) {
         case 0:
-            console.log("res = " + res.data);
+            console.log("res = " + message.data);
             break;
         case 1:
-            data.ID = resList['ID'];
+            data.ID = response["ID"];
             alert("IDは" + data.ID + "です");
             console.log('ID = ' + data.ID);
             
@@ -31,9 +31,18 @@ con.onmessage = function(res) {
 
             break;
         case 2:
-            console.log("res = " + res);
-            //var messageText = document.getElementById('message');
-            //messageText.innerHTML = resList['message'];
+            console.log("res = " + message);
+            var flag = response["flag"];
+            
+            if (flag & 1)   reset();
+            if (flag & 2)   changeBackImage(response["back_image_num"]);
+            if (flag & 4)   changeImage(response["image_num"]);
+            if (flag & 8)   changeMessage(response["message"]);
+            if (flag & 16)  dispAlert(response["alert_message"]);
+            if (flag & 32)  playAudio(response["bgm_num"]);
+            if (flag & 64)  changeImagePosition(response["pos_x"], response["pos_y"]);
+            if (flag & 128) changeImageSize(response["size"]);
+
             break;
         
     }
@@ -57,7 +66,7 @@ function sendData(code) {
     } catch (error) {
         console.log(error);
     }
-}
+} 
 
 window.onbeforeunload = function(e) {
     e.returnValue = "ページを離れようとしています。よろしいですか？";
