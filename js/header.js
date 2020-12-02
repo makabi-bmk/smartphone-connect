@@ -17,4 +17,15 @@ var data = {
     swipe_horizontal : false
 };
 
-var response = {};
+var response = {
+    flag : 0,
+    response_num : 0,
+    image_num : 0,
+    back_image_num : 0,
+    size : 100,
+    pos_x : 0,
+    pos_y : 0,
+    message : "",
+    alert_message : "",
+    bgm_num : 0,
+};

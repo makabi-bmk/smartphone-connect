@@ -1,13 +1,13 @@
 //TODO: イベントを発生させた後フラグを0に戻す
 
 //画像を変更する
-function changeImage(image_num) {
-    document.getElementById("image").src = "../image/image" + image_num + ".png";
+function changeImage(imageNum) {
+    document.getElementById("image").src = "../image/image" + imageNum + ".png";
 }
 
 //背景画像を変更する
-function changeBackImage(image_num) {
-    document.getElementById("image").src = "../back_image/back_image" + image_num + ".png";
+function changeBackImage(backImageNum) {
+    document.getElementById("image").src = "../back_image/back_image" + backImageNum + ".png";
 }
 
 //画像の大きさを変更する(px)
@@ -21,20 +21,20 @@ function changeImageSize(size) {
 }
 
 //画像の場所を移動させる
-function changeImagePosition(x, y) {
+function changeImagePosition(posX, posY) {
     var img = document.getElementById("image");
     img.style.position = "absolute";
-    img.style.top = x + "px";
+    img.style.top = posX + "px";
 }
-function changeImagePositionX(x) {
+function changeImagePositionX(posX) {
     var img = document.getElementById("image");
     img.style.position = "absolute";
-    img.style.top = x + "px";
+    img.style.top = posX + "px";
 }
-function changeImagePositionY(y) {
+function changeImagePositionY(posY) {
     var img = document.getElementById("image");
     img.style.position = "absolute";
-    img.style.left = y + "px";   
+    img.style.left = posY + "px";   
 }
 
 //吹き出しの文字を変更させる

@@ -54,7 +54,6 @@ function sendData(code) {
 
     try {
         con.send(JSON.stringify(data));
-        // con.close();
     } catch (error) {
         console.log(error);
     }
