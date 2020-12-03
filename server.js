@@ -4,6 +4,25 @@ const header = require("./js/header.js");
 const server = require('ws').Server;
 const ws = new server({ port: 8081 });
 
+var data = {
+  ID : 0,
+  type : 0,
+  request_num : 0,
+  alpha : 0,
+  beta : 0,
+  gamma : 0,
+  acceleration_x : 0,
+  acceleration_y : 0,
+  acceleration_z : 0,
+  image_num  : 0,
+  voice_message : "",
+  tap_x : 0,
+  tap_y : 0,
+  image_touch : false,
+  swipe_vertical : false,
+  swipe_horizontal : false
+};
+
 //IDは各クライアントでの初期値を0とするため1から始める
 var ID = 1;
 var clientList = []
@@ -32,12 +51,16 @@ ws.on('connection', socket => {
     if (type == 0) {
       switch(request_num) {
         case 0:
-          sockets[clientID].send(ms);
+          //ws.sockets.socket(sockets[clientID]).emit(ms);
+          ws.clients.forEach(client => {
+            client.send(ms);
+          });
           break;
 
         case 1:
-          res["ID"] = ID;
-          sockets[ID] = socket;
+          var newID = ID;
+          res["ID"] = newID;
+          sockets[newID] = JSON.parse(JSON.stringify(socket));
           ID++;
           break;
 
