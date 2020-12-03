@@ -19,11 +19,12 @@ ws.on('connection', socket => {
     console.log("ms = " + ms);
     var data = JSON.parse(ms);
     var res = {};
+    var sockets = {};
 
     console.log("request_num = " + data["request_num"]);
 
     var request_num = data["request_num"];
-    res["re_num"] = request_num;
+    res["request_num"] = request_num;
     var clientID = data["ID"];
     var type = data["type"];
 
@@ -31,10 +32,12 @@ ws.on('connection', socket => {
     if (type == 0) {
       switch(request_num) {
         case 0:
+          sockets[clientID].send(ms);
           break;
 
         case 1:
           res["ID"] = ID;
+          sockets[ID] = socket;
           ID++;
           break;
 

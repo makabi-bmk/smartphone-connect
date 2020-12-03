@@ -49,7 +49,7 @@ con.onmessage = function(message) {
 };
 
 var sendSensorData = function() {
-    sendData(2);
+    sendData(0);
 };
 
 function sendData(code) {
