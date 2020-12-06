@@ -26,13 +26,17 @@ var data = {
 //IDは各クライアントでの初期値を0とするため1から始める
 var ID = 1;
 var clientList = []
+var sockets = [];
 for (var i = 0; i < 50; i++) {
   clientList.push(Object.create(data));
+  sockets.push(null);
 }
 
-var sockets = new Array(50);
+
+//var naita = null;
 
 ws.on('connection', socket => {
+  
   console.log('connected!');
 
   socket.on('message', ms => {
@@ -54,16 +58,23 @@ ws.on('connection', socket => {
         case 0:
           /*
           ws.clients.forEach(client => {
+            console.log("typeof(client) = " + typeof(client));
             client.send(ms);
           });
-          */
-          sockets[clientID].send("OK response");
+        */
+          //if (naita != null) {
+            res["tanaka"] = "tanaka";
+            console.log("sockets[" + clientID + "] = " + sockets[clientID]);
+            sockets[clientID].send(JSON.stringify(res));
+          //}        
+          
           break;
 
         case 1:
           var newID = ID;
           res["ID"] = newID;
-          sockets[newID] = JSON.parse(JSON.stringify(socket));
+          sockets[newID] = socket;
+          naita = socket;
           ID++;
           break;
 
@@ -92,6 +103,7 @@ ws.on('connection', socket => {
       }
     }
 
+    res["tanaka"] = "hoshino";
     socket.send(JSON.stringify(res));
   });
 
