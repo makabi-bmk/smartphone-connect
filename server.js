@@ -30,6 +30,8 @@ for (var i = 0; i < 50; i++) {
   clientList.push(Object.create(data));
 }
 
+var sockets = new Array(50);
+
 ws.on('connection', socket => {
   console.log('connected!');
 
@@ -38,7 +40,6 @@ ws.on('connection', socket => {
     console.log("ms = " + ms);
     var data = JSON.parse(ms);
     var res = {};
-    var sockets = {};
 
     console.log("request_num = " + data["request_num"]);
 
@@ -51,10 +52,12 @@ ws.on('connection', socket => {
     if (type == 0) {
       switch(request_num) {
         case 0:
-          //ws.sockets.socket(sockets[clientID]).emit(ms);
+          /*
           ws.clients.forEach(client => {
             client.send(ms);
           });
+          */
+          sockets[clientID].send("OK response");
           break;
 
         case 1:
