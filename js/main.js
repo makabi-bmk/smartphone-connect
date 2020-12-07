@@ -9,9 +9,9 @@ window.onload = function() {
     } catch (error) {
         console.log(error);
     }
-    while (sensorData.smartphone_ID == 0) {
+    //while (sensorData.smartphone_ID == 0) {
         sendData(1);
-    }
+    //}
 };
 
 con.onmessage = function(ms) {

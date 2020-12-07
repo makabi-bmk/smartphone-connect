@@ -49,7 +49,7 @@ ws.on('connection', socket => {
           var res = {ID : newID};
           clientSockets[newID] = socket;
           smartphoneID++;
-          sendData(0, newID, res);
+          socket.send(JSON.stringify(res));
           break;
 
         // scratchにスマホのデータを送る
@@ -71,7 +71,7 @@ ws.on('connection', socket => {
           var res = {ID : newScratchID};
           scratchSockets[newScratchID] =  socket;
           scratchID++;
-          sendData(1, newScratchID, res);
+          socket.send(JSON.stringify(res));
           break;
         case 2:
           // スマホへ命令するデータを送る
@@ -92,6 +92,7 @@ ws.on('connection', socket => {
 });
 
 function sendData(type, ID, data) {
+  console.log("送る:" + data);
   if (type == 0) {
     clientSockets[ID].send(JSON.stringify(data));   
   } else {
