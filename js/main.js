@@ -1,4 +1,8 @@
+const { sensorData } = require("./header");
+
 const con = new WebSocket('ws://localhost:8081/');
+
+var isCommunicatable = true;
 
 window.onload = function() {
     try {
@@ -8,61 +12,54 @@ window.onload = function() {
     } catch (error) {
         console.log(error);
     }
-    sendData(1);
-    setInterval(sendSensorData, 3000);
+    while (sensorData.smartphone_ID == 0) {
+        sendData(1);
+    }
 };
 
-con.onmessage = function(message) {
-    var response = JSON.parse(message.data);
-    console.log("res = " + message.data);
+con.onmessage = function(ms) {
+    var receivedData = JSON.parse(ms.data);
+    var request_num = receivedData["request_num"];
+    isCommunicatable = true;
 
-    var request_num = response["request_num"];
+    console.log("res = " + ms.data);
+    
     switch(request_num) {
         case 0:
-            console.log("res = " + message.data);
             break;
         case 1:
-            data.ID = response["ID"];
-            alert("IDは" + data.ID + "です");
-            console.log('ID = ' + data.ID);
-            
+            sensorData.smartphone_ID = receivedData["smartphone_ID"];
+            alert("IDは" + sensorData.smartphone_ID + "です");
             var IDtext = document.getElementById("ID");
-            IDtext.innerHTML = "ID : " + data.ID;
-
+            IDtext.innerHTML = "ID : " + sensorData.smartphone_ID;
             break;
+
         case 2:
-            console.log("res = " + message);
-            var flag = response["flag"];
-            
+            var flag = receivedData["flag"];            
             if (flag & 1)   reset();
-            if (flag & 2)   changeBackImage(response["back_image_num"]);
-            if (flag & 4)   changeImage(response["image_num"]);
-            if (flag & 8)   changeMessage(response["message"]);
-            if (flag & 16)  dispAlert(response["alert_message"]);
-            if (flag & 32)  playAudio(response["bgm_num"]);
-            if (flag & 64)  changeImagePosition(response["pos_x"], response["pos_y"]);
-            if (flag & 128) changeImageSize(response["size"]);
-
+            else {
+                if (flag & 2)   changeBackImage(receivedData["back_image_num"]);
+                if (flag & 4)   changeImage(receivedData["image_num"]);
+                if (flag & 8)   changeMessage(receivedData["message"]);
+                if (flag & 16)  dispAlert(receivedData["alert_message"]);
+                if (flag & 32)  playAudio(receivedData["bgm_num"]);
+                if (flag & 64)  changeImagePosition(receivedData["pos_x"], receivedData["pos_y"]);
+                if (flag & 128) changeImageSize(receivedData["size"]);
+            }
+            sensorData.scratch_ID = receivedData["scratch_ID"];
+            sendData(2);
             break;
-        
     }
 };
 
-var sendSensorData = function() {
-    sendData(0);
-};
+function sendData(request_num) {
+    if (isCommunicatable == false) return;
 
-function sendData(code) {
-
-    if (data.ID == 0) {
-        data.request_num = 1;
-    } else {
-        data.request_num = code;
-    }
+    sensorData.request_num = request_num;
     console.log('送るデータ:' + JSON.stringify(data));
-
     try {
         con.send(JSON.stringify(data));
+        isCommunicatable = false;
     } catch (error) {
         console.log(error);
     }

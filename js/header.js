@@ -1,5 +1,7 @@
-var data = {
-    ID : 0,
+
+module.exports.sensorData = {
+    smartphone_ID : 0,
+    scratch_ID : 0,
     type : 0,
     request_num : 0,
     alpha : 0,
@@ -17,7 +19,9 @@ var data = {
     swipe_horizontal : false
 };
 
-module.exports.response = {
+module.exports.orderData = {
+    smartphone_ID : 0,
+    scratch_ID : 0,
     flag : 0,
     response_num : 0,
     image_num : 0,

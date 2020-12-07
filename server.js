@@ -4,36 +4,15 @@ const header = require("./js/header.js");
 const server = require('ws').Server;
 const ws = new server({ port: 8081 });
 
-var data = {
-  ID : 0,
-  type : 0,
-  request_num : 0,
-  alpha : 0,
-  beta : 0,
-  gamma : 0,
-  acceleration_x : 0,
-  acceleration_y : 0,
-  acceleration_z : 0,
-  image_num  : 0,
-  voice_message : "",
-  tap_x : 0,
-  tap_y : 0,
-  image_touch : false,
-  swipe_vertical : false,
-  swipe_horizontal : false
-};
-
 //IDは各クライアントでの初期値を0とするため1から始める
-var ID = 1;
-var clientList = []
-var sockets = [];
+var smartphoneID = 1;
+var scratchID = 1;
+var clientSockets = [];
+var scratchSockets = [];
 for (var i = 0; i < 50; i++) {
-  clientList.push(Object.create(data));
-  sockets.push(null);
+  clientSockets.push(null);
+  scratchSockets.push(null);
 }
-
-
-//var naita = null;
 
 ws.on('connection', socket => {
   
@@ -42,46 +21,42 @@ ws.on('connection', socket => {
   socket.on('message', ms => {
 
     console.log("ms = " + ms);
-    var data = JSON.parse(ms);
-    var res = {};
+    var receivedData = JSON.parse(ms);
 
-    console.log("request_num = " + data["request_num"]);
+    console.log("request_num = " + receivedData["request_num"]);
 
-    var request_num = data["request_num"];
+    var request_num = receivedData["request_num"];
     res["request_num"] = request_num;
-    var clientID = data["ID"];
-    var type = data["type"];
+    var type = receivedData["type"];
 
     //スマホからのリクエスト
     if (type == 0) {
       switch(request_num) {
         case 0:
+          //これブロードキャスト通信できる
           /*
           ws.clients.forEach(client => {
             console.log("typeof(client) = " + typeof(client));
             client.send(ms);
           });
         */
-          //if (naita != null) {
-            res["tanaka"] = "tanaka";
-            console.log("sockets[" + clientID + "] = " + sockets[clientID]);
-            sockets[clientID].send(JSON.stringify(res));
-          //}        
-          
+            //clientSockets[clientID].send(JSON.stringify(res)); 
+            sendData(0, receivedData["smartphone_ID"], res);
           break;
 
+        // スマホにIDを割り振る
         case 1:
-          var newID = ID;
-          res["ID"] = newID;
-          sockets[newID] = socket;
-          naita = socket;
-          ID++;
+          var newID = smartphoneID;
+          var res = {ID : newID};
+          clientSockets[newID] = socket;
+          smartphoneID++;
+          sendData(0, newID, res);
           break;
 
+        // scratchにスマホのデータを送る
         case 2:
-          setData(clientID, data);
-          res = Object.create(header.response);
-
+          var orderData = getSensorData(receivedData);
+          sendData(1, receivedData["scratch_ID"], orderData);
           break;
       }
     }
@@ -89,22 +64,23 @@ ws.on('connection', socket => {
     //scratchからのリクエスト
     else if (type == 1) {
       switch(request_num) {
-        case 3:
-          if (0 < clientID && clientID <= 50) {
-            res['alpha'] = clientList[clientID].alpha;
-          } else {
-            res['alpha'] = 0;
-          }
+        case 0:
           break;
-        
-        case 4:
-          clientList[clientID].message = data['message'];
+        case 1:
+          // scratchにIDを割り振る
+          var newScratchID = scratchID;
+          var res = {ID : newScratchID};
+          scratchSockets[newScratchID] =  socket;
+          scratchID++;
+          sendData(1, newScratchID, res);
           break;
-      }
+        case 2:
+          // スマホへ命令するデータを送る
+          sendData(0, clientID, getOrderData(receivedData));
+        break;
+      }  
     }
-
-    res["tanaka"] = "hoshino";
-    socket.send(JSON.stringify(res));
+    //socket.send(JSON.stringify(res));
   });
 
   socket.on('close', () => {
@@ -116,18 +92,50 @@ ws.on('connection', socket => {
   });
 });
 
-function setData(clientID, data) {
-  clientList[clientID].alpha            = data["alpha"];
-  clientList[clientID].beta             = data["beta"];
-  clientList[clientID].gamma            = data["gamma"];
-  clientList[clientID].acceleration_x   = data["acceleration_x"];
-  clientList[clientID].acceleration_y   = data["acceleration_y"];
-  clientList[clientID].acceleration_z   = data["acceleration_z"];
-  clientList[clientID].image_num        = data["image_num"];
-  clientList[clientID].voice_message    = data["voice_message"];
-  clientList[clientID].tap_x            = data["tap_x"];
-  clientList[clientID].tap_y            = data["tap_y"];
-  clientList[clientID].image_touch      = data["image_touch"]
-  clientList[clientID].swipe_vertical   = data["swipe_vertical"];
-  clientList[clientID].swipe_horizontal = data["swipe_horizontal"];
+function sendData(type, ID, data) {
+  if (type == 0) {
+    clientSockets[ID].send(JSON.stringify(data));   
+  } else {
+    scratchSockets[ID].send(JSON.stringify(data));
+  }
+}
+
+function getSensorData(data) {
+  var sensorData = header.sensorData;
+  sensorData.smartphone_ID    = data["smartphone_ID"];
+  sensorData.scratch_ID       = data["scratch_ID"];
+  sensorData.alpha            = data["alpha"];
+  sensorData.beta             = data["beta"];
+  sensorData.gamma            = data["gamma"];
+  sensorData.acceleration_x   = data["acceleration_x"];
+  sensorData.acceleration_y   = data["acceleration_y"];
+  sensorData.acceleration_z   = data["acceleration_z"];
+  sensorData.image_num        = data["image_num"];
+  sensorData.voice_message    = data["voice_message"];
+  sensorData.tap_x            = data["tap_x"];
+  sensorData.tap_y            = data["tap_y"];
+  sensorData.image_touch      = data["image_touch"]
+  sensorData.swipe_vertical   = data["swipe_vertical"];
+  sensorData.swipe_horizontal = data["swipe_horizontal"];
+
+  return sensorData;
+}
+
+function getOrderData(data) {
+  var orderData = header.orderData;
+  var flag = data["flag"];
+  orderData.flag = flag;
+  if (flag & 1) return orderData;
+  if (flag & 2) orderData.back_image_num = data["back_image_num"];
+  if (flag & 4) orderData.image_num = data["image_num"];
+  if (flag & 8) orderData.message = data["message"];
+  if (flag & 16) orderData.alert_message = data["alert_message"];
+  if (flag & 32) orderData.bgm_num = data["bgm_num"];
+  if (flag & 64) {
+      orderData.pos_x = data["pos_x"];
+      orderData.pos_y = data["pos_y"];
+  }
+  if (flag & 128) orderData.size = data["size"];
+
+  return orderData;
 }
