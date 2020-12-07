@@ -1,5 +1,5 @@
 const con = new WebSocket('ws://localhost:8081/');
-const header = require("./header");
+const header = require("./header.js");
 var sensorData = header.sensorData;
 
 var isCommunicatable = true;
