@@ -56,9 +56,9 @@ function sendData(request_num) {
     if (isCommunicatable == false) return;
 
     sensorData.request_num = request_num;
-    console.log('送るデータ:' + JSON.stringify(data));
+    console.log('送るデータ:' + JSON.stringify(sensorData));
     try {
-        con.send(JSON.stringify(data));
+        con.send(JSON.stringify(sensorData));
         isCommunicatable = false;
     } catch (error) {
         console.log(error);
