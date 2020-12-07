@@ -26,7 +26,6 @@ ws.on('connection', socket => {
     console.log("request_num = " + receivedData["request_num"]);
 
     var request_num = receivedData["request_num"];
-    res["request_num"] = request_num;
     var type = receivedData["type"];
 
     //スマホからのリクエスト

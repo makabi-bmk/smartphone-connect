@@ -20,8 +20,10 @@ module.exports.sensorData = {
 };
 
 module.exports.orderData = {
+    request_num : 0,
     smartphone_ID : 0,
     scratch_ID : 0,
+    type : 1,
     flag : 0,
     response_num : 0,
     image_num : 0,

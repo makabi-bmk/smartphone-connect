@@ -1,15 +1,15 @@
 // デバイスの方向の変化を検出したとき
 window.addEventListener('deviceorientation', function(e) {
-    data.alpha = e.alpha;
-    data.beta = e.beta;
-    data.gamma = e.gamma;
+    sensorData.alpha = e.alpha;
+    sensorData.beta = e.beta;
+    sensorData.gamma = e.gamma;
 });
 
 // デバイスの加速度の変化を検出したとき
 window.addEventListener('devicemotion', function(e) {
-    data.acceleration_x = e.acceleration.x;
-    data.acceleration_y = e.acceleration.y;
-    data.acceleration_z = e.acceleration.z;
+    sensorData.acceleration_x = e.acceleration.x;
+    sensorData.acceleration_y = e.acceleration.y;
+    sensorData.acceleration_z = e.acceleration.z;
 });
 
 //TODO: event.preventDefault()が動かないのと、縦方向のスワイプが検出できない
@@ -22,8 +22,8 @@ var touchMoveY;
 window.addEventListener("touchstart", function(event) {
     event.preventDefault();
     // 座標の取得
-    touchStartX = data.tap_x = event.touches[0].pageX;
-    touchStartY = data.tap_y = event.touches[0].pageY;
+    touchStartX = sensorData.tap_x = event.touches[0].pageX;
+    touchStartY = sensorData.tap_y = event.touches[0].pageY;
 }, { passive: false });
 
 // タップの移動
@@ -38,16 +38,16 @@ window.addEventListener("touchmove", function(event) {
 window.addEventListener("touchend", function(event) {
     if (touchStartX > touchMoveX && touchStartX > (touchMoveX + 50)) {
         //右から左に指が移動した場合
-        data.swipe_horizontal = true;
+        sensorData.swipe_horizontal = true;
     } else if (touchStartX < touchMoveX && (touchStartX + 50) < touchMoveX) {
         //左から右に指が移動した場合
-        data.swipe_horizontal = true;
+        sensorData.swipe_horizontal = true;
     }
     if (touchStartY > touchMoveY && touchStartY > (touchMoveY + 50)) {
         //上から下に指が移動した場合
-        data.swipe_vertical = true;
+        sensorData.swipe_vertical = true;
     } else if (touchStartY < touchMoveY && (touchStartY + 50) < touchMoveY) {
         //下から上に指が移動した場合
-        data.swipe_vertical = true;
+        sensorData.swipe_vertical = true;
     }
 }, { passive: false });
