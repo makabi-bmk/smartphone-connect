@@ -7,10 +7,10 @@ const ws = new server({ port: 8081 });
 //IDは各クライアントでの初期値を0とするため1から始める
 var smartphoneID = 1;
 var scratchID = 1;
-var clientSockets = [];
+var smartphoneSockets = [];
 var scratchSockets = [];
 for (var i = 0; i < 50; i++) {
-  clientSockets.push(null);
+  smartphoneSockets.push(null);
   scratchSockets.push(null);
 }
 
@@ -46,16 +46,16 @@ ws.on('connection', socket => {
         // スマホにIDを割り振る
         case 1:
           var newID = smartphoneID;
-          var res = {ID : newID};
-          clientSockets[newID] = socket;
+          var res = {smartphone_ID : newID, request_num : 1};
+          smartphoneSockets[newID] = socket;
+          console.log("セット:smartphoneSockets[" + newID + "] = " + smartphoneSockets[newID]);
           smartphoneID++;
           socket.send(JSON.stringify(res));
           break;
 
         // scratchにスマホのデータを送る
         case 2:
-          var orderData = getSensorData(receivedData);
-          sendData(1, receivedData["scratch_ID"], orderData);
+          sendData(1, receivedData["scratch_ID"], getSensorData(receivedData));
           break;
       }
     }
@@ -68,14 +68,14 @@ ws.on('connection', socket => {
         case 1:
           // scratchにIDを割り振る
           var newScratchID = scratchID;
-          var res = {ID : newScratchID};
+          var res = {scratch_ID : newScratchID, request_num : 1};
           scratchSockets[newScratchID] =  socket;
           scratchID++;
           socket.send(JSON.stringify(res));
           break;
         case 2:
           // スマホへ命令するデータを送る
-          sendData(0, clientID, getOrderData(receivedData));
+          sendData(0, receivedData["smartphone_ID"], getOrderData(receivedData));
         break;
       }  
     }
@@ -92,9 +92,9 @@ ws.on('connection', socket => {
 });
 
 function sendData(type, ID, data) {
-  console.log("送る:" + data);
   if (type == 0) {
-    clientSockets[ID].send(JSON.stringify(data));   
+    console.log("送信:smartphoneSockets[" + ID + "]へ : " + smartphoneSockets[ID]);
+    smartphoneSockets[ID].send(JSON.stringify(data));   
   } else {
     scratchSockets[ID].send(JSON.stringify(data));
   }
@@ -123,6 +123,9 @@ function getSensorData(data) {
 
 function getOrderData(data) {
   var orderData = header.orderData;
+  orderData.request_num = 2;
+  orderData.scratch_ID = data["scratch_ID"];
+
   var flag = data["flag"];
   orderData.flag = flag;
   if (flag & 1) return orderData;

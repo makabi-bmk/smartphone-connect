@@ -50,18 +50,19 @@ function playAudio(bgmNum) {
 
 //全ての設定をリセットする
 function reset() {
-    data.alpha = 0;
-    data.beta = 0;
-    data.acceleration_x = 0;
-    data.acceleration_y = 0;
-    data.acceleration_z = 0;
-    data.image_num = 0;
-    data.voice_message = "";
-    data.tap_x = 0;
-    data.tap_y = 0;
-    data.image_touch = false;
-    data.swipe_vertical = false;
-    data.swipe_horizontal = false;
+    sensorData.alpha = 0;
+    sensorData.beta = 0;
+    sensorData.gamma = 0;
+    sensorData.acceleration_x = 0;
+    sensorData.acceleration_y = 0;
+    sensorData.acceleration_z = 0;
+    sensorData.image_num = 0;
+    sensorData.voice_message = "";
+    sensorData.tap_x = 0;
+    sensorData.tap_y = 0;
+    sensorData.image_touch = false;
+    sensorData.swipe_vertical = false;
+    sensorData.swipe_horizontal = false;
 
     changeBackImage(0);
     changeImage(0);
