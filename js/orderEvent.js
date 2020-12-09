@@ -92,7 +92,7 @@ function playAudio(num) {
 //全ての設定をリセットする
 function resetAll() {
     resetTouch();
-    
+
     changeVisibility(true);
     setInputText("");
     changeButtonText("ボタン");
