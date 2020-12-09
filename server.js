@@ -91,8 +91,7 @@ ws.on('connection', socket => {
           if (!sendData(TYPE.smartphone, receivedData[DATA_NAME.smartphone_ID], getOrderData(receivedData))) {
             socket.send(JSON.stringify(header.sensorData));
           }
-          }
-        break;
+          break;
       }  
     }
     //socket.send(JSON.stringify(res));
