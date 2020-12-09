@@ -3,13 +3,15 @@
 const header = require("./js/header.js");
 const server = require('ws').Server;
 const ws = new server({ port: 8081 });
+const MAX_ACCESS_NUM = 50;
+const DATA_NAME = header.DATA_NAME;
 
 //IDは各クライアントでの初期値を0とするため1から始める
 var smartphoneID = 1;
 var scratchID = 1;
 var smartphoneSockets = [];
 var scratchSockets = [];
-for (var i = 0; i < 50; i++) {
+for (var i = 0; i < MAX_ACCESS_NUM; i++) {
   smartphoneSockets.push(null);
   scratchSockets.push(null);
 }
@@ -23,13 +25,13 @@ ws.on('connection', socket => {
     console.log("ms = " + ms);
     var receivedData = JSON.parse(ms);
 
-    console.log("request_num = " + receivedData["request_num"]);
+    console.log("request_num = " + receivedData[DATA_NAME.request_num]);
 
-    var request_num = receivedData["request_num"];
-    var type = receivedData["type"];
+    var request_num = receivedData[DATA_NAME.request_num];
+    var type = receivedData[DATA_NAME.type];
 
     //スマホからのリクエスト
-    if (type == 0) {
+    if (type == TYPE.smartphone) {
       switch(request_num) {
         case 0:
           //これブロードキャスト通信できる
@@ -39,43 +41,57 @@ ws.on('connection', socket => {
             client.send(ms);
           });
         */
-            //clientSockets[clientID].send(JSON.stringify(res)); 
-            sendData(0, receivedData["smartphone_ID"], res);
+            //clientSockets[clientID].send(JSON.stringify(res));
           break;
 
         // スマホにIDを割り振る
         case 1:
           var newID = smartphoneID;
-          var res = {smartphone_ID : newID, request_num : 1};
-          smartphoneSockets[newID] = socket;
-          console.log("セット:smartphoneSockets[" + newID + "] = " + smartphoneSockets[newID]);
-          smartphoneID++;
+          var res = {smartphone_ID : newID, request_num : header.REQUEST.getID};
+          if (isAccessOK(newID)) {
+            res["status"] = 200;
+            smartphoneSockets[newID] = socket;
+            smartphoneID++;
+          } else {
+            var errorMessage = "アクセス数が上限に達しています。時間をおいて再度お試しください。";
+            res["status"] = 500;
+            res["message"] = errorMessage;
+          }
           socket.send(JSON.stringify(res));
           break;
 
         // scratchにスマホのデータを送る
         case 2:
-          sendData(1, receivedData["scratch_ID"], getSensorData(receivedData));
+          sendData(TYPE.scratch, receivedData[DATA_NAME.scratch_ID], getSensorData(receivedData));
           break;
       }
     }
 
     //scratchからのリクエスト
-    else if (type == 1) {
+    else if (type == TYPE.scratch) {
       switch(request_num) {
         case 0:
           break;
         case 1:
           // scratchにIDを割り振る
-          var newScratchID = scratchID;
-          var res = {scratch_ID : newScratchID, request_num : 1};
-          scratchSockets[newScratchID] =  socket;
-          scratchID++;
+          var newID = scratchID;
+          var res = {scratch_ID : newID, request_num : header.REQUEST.getID};
+          if (isAccessOK(newID)) {
+            scratchSockets[newID] =  socket;
+            scratchID++;
+          } else {
+            var errorMessage = "アクセス数が上限に達しています。時間をおいて再度お試しください。";
+            res["status"] = 500;
+            res["message"] = errorMessage;
+          }
           socket.send(JSON.stringify(res));
           break;
         case 2:
           // スマホへ命令するデータを送る
-          sendData(0, receivedData["smartphone_ID"], getOrderData(receivedData));
+          if (!sendData(TYPE.smartphone, receivedData[DATA_NAME.smartphone_ID], getOrderData(receivedData))) {
+            socket.send(JSON.stringify(header.sensorData));
+          }
+          }
         break;
       }  
     }
@@ -92,53 +108,92 @@ ws.on('connection', socket => {
 });
 
 function sendData(type, ID, data) {
-  if (type == 0) {
-    console.log("送信:smartphoneSockets[" + ID + "]へ : " + smartphoneSockets[ID]);
-    smartphoneSockets[ID].send(JSON.stringify(data));   
+  if (existSocket(type, ID)) {
+    switch(type) {
+      case TYPE.smartphone:
+        console.log("送信:smartphoneSockets[" + ID + "]へ : " + smartphoneSockets[ID]);
+        smartphoneSockets[ID].send(JSON.stringify(data));
+        break;
+      
+      case TYPE.scratch:
+        scratchSockets[ID].send(JSON.stringify(data));
+        break;
+    }
+    return true;
   } else {
-    scratchSockets[ID].send(JSON.stringify(data));
+    console.log("通信相手が存在しません");
+    return false;
+  }
+}
+
+function isAccessOK(ID) {
+  if (0 < ID && ID < MAX_ACCESS_NUM) return true;
+  else false;
+}
+
+function existSocket(type, ID) {
+  switch(type) {
+    case TYPE.smartphone:
+      if ((0 <= ID && ID < MAX_ACCESS_NUM) && smartphoneSockets[ID] != null) return true;
+      else false;
+      break;
+    
+    case TYPE.scratch:
+      if ((0 <= ID && ID < MAX_ACCESS_NUM) && scratchSockets[ID] != null) return true;
+      else false;
+      break;
   }
 }
 
 function getSensorData(data) {
   var sensorData = header.sensorData;
-  sensorData.smartphone_ID    = data["smartphone_ID"];
-  sensorData.scratch_ID       = data["scratch_ID"];
-  sensorData.alpha            = data["alpha"];
-  sensorData.beta             = data["beta"];
-  sensorData.gamma            = data["gamma"];
-  sensorData.acceleration_x   = data["acceleration_x"];
-  sensorData.acceleration_y   = data["acceleration_y"];
-  sensorData.acceleration_z   = data["acceleration_z"];
-  sensorData.image_num        = data["image_num"];
-  sensorData.voice_message    = data["voice_message"];
-  sensorData.tap_x            = data["tap_x"];
-  sensorData.tap_y            = data["tap_y"];
-  sensorData.image_touch      = data["image_touch"]
-  sensorData.swipe_vertical   = data["swipe_vertical"];
-  sensorData.swipe_horizontal = data["swipe_horizontal"];
+  var DATA_NAME = header.DATA_NAME;
+  sensorData.smartphone_ID    = data[DATA_NAME.smartphone_ID];
+  sensorData.scratch_ID       = data[DATA_NAME.scratch_ID];
+  sensorData.alpha            = data[DATA_NAME.alpha];
+  sensorData.beta             = data[DATA_NAME.beta];
+  sensorData.gamma            = data[DATA_NAME.gamma];
+  sensorData.angle            = data[DATA_NAME.angle];
+  sensorData.size             = data[DATA_NAME.size];
+  sensorData.position_x       = data[DATA_NAME.position_x];
+  sensorData.position_y       = data[DATA_NAME.position_y];
+  sensorData.acceleration_x   = data[DATA_NAME.acceleration_x];
+  sensorData.acceleration_y   = data[DATA_NAME.acceleration_y];
+  sensorData.acceleration_z   = data[DATA_NAME.acceleration_z];
+  sensorData.image_num        = data[DATA_NAME.image_num];
+  sensorData.input_text       = data[DATA_NAME.input_text];
+  sensorData.voice_message    = data[DATA_NAME.voice_message];
+  sensorData.tap_position_x   = data[DATA_NAME.tap_position_x];
+  sensorData.tap_position_y   = data[DATA_NAME.tap_position_y];
+  sensorData.button_click     = data[DATA_NAME.button_click];
+  sensorData.image_touch      = data[DATA_NAME.image_touch];
+  sensorData.swipe_vertical   = data[DATA_NAME.swipe_vertical];
+  sensorData.swipe_horizontal = data[DATA_NAME.swipe_horizontal];
 
   return sensorData;
 }
 
 function getOrderData(data) {
-  var orderData = header.orderData;
-  orderData.request_num = 2;
-  orderData.scratch_ID = data["scratch_ID"];
+  var orderData         = header.orderData;
+  orderData.request_num = header.REQUEST.connect;
+  orderData.scratch_ID  = data[DATA_NAME.scratch_ID];
+  var flag              = data[DATA_NAME.flag];
+  orderData.flag        = flag;
 
-  var flag = data["flag"];
-  orderData.flag = flag;
-  if (flag & 1) return orderData;
-  if (flag & 2) orderData.back_image_num = data["back_image_num"];
-  if (flag & 4) orderData.image_num = data["image_num"];
-  if (flag & 8) orderData.message = data["message"];
-  if (flag & 16) orderData.alert_message = data["alert_message"];
-  if (flag & 32) orderData.bgm_num = data["bgm_num"];
-  if (flag & 64) {
-      orderData.pos_x = data["pos_x"];
-      orderData.pos_y = data["pos_y"];
+  if (flag & 1)    return orderData;
+  if (flag & 2)    orderData.back_image_num = data[DATA_NAME.back_image_num];
+  if (flag & 4)    orderData.image_num      = data[DATA_NAME.image_num];
+  if (flag & 8)    orderData.message        = data[DATA_NAME.message];
+  if (flag & 16)   orderData.alert_message  = data[DATA_NAME.alert_message];
+  if (flag & 32)   orderData.audio_num      = data[DATA_NAME.audio_num];
+  if (flag & 64)   {
+      orderData.position_x = data[DATA_NAME.position_x];
+      orderData.position_y = data[DATA_NAME.position_y];
   }
-  if (flag & 128) orderData.size = data["size"];
+  if (flag & 128)  orderData.size           = data[DATA_NAME.size];
+  if (flag & 256)  orderData.angle          = data[DATA_NAME.angle];
+  if (flag & 512)  orderData.button_text    = data[DATA_NAME.button_text];
+  if (flag & 1024) orderData.view           = data[DATA_NAME.view];
 
   return orderData;
 }

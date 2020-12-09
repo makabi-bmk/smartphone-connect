@@ -1,27 +1,64 @@
-//TODO: イベントを発生させた後フラグを0に戻す
-
-//画像を変更する
-function changeImage(imageNum) {
-    document.getElementById("image").src = "../image/image" + imageNum + ".png";
+// 画像の表示/非表示を切り替える
+function changeVisibility(isVisiable) {
+    var img = document.getElementById("image");
+    if (isVisiable) {
+        img.style.visibility = "visible";
+    } else {
+        img.style.visibility = "false";
+    }
 }
 
-//背景画像を変更する
-function changeBackImage(backImageNum) {
-    document.getElementById("image").src = "../back_image/back_image" + backImageNum + ".png";
+// 入力された文字を取得する
+function setInputText() {
+    var inputText = document.getElementById("input_text");
+    sensorData.input_text = inputText.value;
 }
 
-//画像の大きさを変更する(px)
-//TODO: ここpxじゃだめなんだよ～～%がいいよね～～～
+// ボタンの文字を変更する
+function changeButtonText(text) {
+    var button = document.getElementById("button");
+    if (text.length < MAX_BUTTON_TEXT_LENGTH) {
+        button.value = text;
+    }
+}
+
+// 画像を回転する
+function rotateImage(angle){
+    var img = document.getElementById("image");
+    sensorData.angle = angle;
+    img.style.transform = "rotate(" + angle + "deg)";
+  }
+
+// 画像を変更する
+function changeImage(num) {
+    var fileName = "../image/image" + num + ".png";
+    if (0 <= num && num < IMAGE_NUM) {
+        document.getElementById("image").src = fileName;
+    }
+}
+
+// 背景画像を変更する
+function changeBackImage(num) {
+    var fileName = "../back_image/back_image" + num + ".png";
+    if (0 <= num && num < BACK_IMAGE_NUM) {
+        document.getElementById("back_image").src = fileName;
+    }
+}
+
+// 画像の大きさを変更する(%)
 function changeImageSize(size) {
     var img = document.getElementById("image");
-    var orgWidth  = img.width;
-    var orgHeight = img.height;
-    img.width = size;
-    img.height = orgHeight * (img.width / orgWidth);
+    imageSize = (size / 100) * screenWidth;
+    sensorData.size = size;
+    if (0 < size && size < MAX_SIZE) {
+        img.width = imageSize;
+    }
+    //img.height = orgHeight * (img.width / orgWidth);
 }
 
-//画像の場所を移動させる
-//片方の値のみしか移動させたくない場合は-1を代入すればよいのでは？
+// 画像の場所を移動させる
+// 片方の値のみしか移動させたくない場合は-1が代入される
+// TODO: ここ上限値決める
 function changeImagePosition(posX, posY) {
     var img = document.getElementById("image");
     img.style.position = "absolute";
@@ -32,41 +69,44 @@ function changeImagePosition(posX, posY) {
 //吹き出しの文字を変更させる
 function changeMessage(text) {
     var message = document.getElementById("message");
-    message.innerHTML = text;
+    if (text.length < MAX_MESSAGE_LENGTH) {
+        message.innerHTML = text;
+    }
 }
 
 //アラートを表示させる
 function dispAlert(text) {
-    alert(text);
+    if (text.length < MAX_ALERT_LENGTH) {
+        alert(text);
+    }
 }
 
 //音を鳴らす
 //これならないかも
-function playAudio(bgmNum) {
-    var bgmName = "../audio/audio" + bgmNum + ".mp3";
-    var bgm = new Audio(bgmName);
-    bgm.play();
+function playAudio(num) {
+    var name = "../audio/audio" + num + ".mp3";
+    var audio = new Audio(name);
+    audio.play();
 }
 
 //全ての設定をリセットする
-function reset() {
-    sensorData.alpha = 0;
-    sensorData.beta = 0;
-    sensorData.gamma = 0;
-    sensorData.acceleration_x = 0;
-    sensorData.acceleration_y = 0;
-    sensorData.acceleration_z = 0;
-    sensorData.image_num = 0;
-    sensorData.voice_message = "";
-    sensorData.tap_x = 0;
-    sensorData.tap_y = 0;
-    sensorData.image_touch = false;
-    sensorData.swipe_vertical = false;
-    sensorData.swipe_horizontal = false;
-
-    changeBackImage(0);
+function resetAll() {
+    resetTouch();
+    
+    changeVisibility(true);
+    setInputText("");
+    changeButtonText("ボタン");
+    rotateImage(0);
     changeImage(0);
+    changeBackImage(0);
     changeImageSize(70);
+    changeImagePosition(0, 0);
     changeMessage("Hello World!");
+}
 
+function resetTouch() {
+    sensorData.button_click     = false;
+    sensorData.image_touch      = false;
+    sensorData.swipe_vertical   = false;
+    sensorData.swipe_horizontal = false;
 }

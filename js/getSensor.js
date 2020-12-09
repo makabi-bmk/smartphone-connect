@@ -1,3 +1,19 @@
+var imageSize = 70;
+var imageAngle = 0;
+
+// オブジェクトをタッチされたとき
+function clickedImage() {
+    sensorData.image_touch = true;
+}
+
+// オブジェクトの位置を検知する
+function setImagePosition() {
+    var img = document.getElementById("image");
+    var clientRect = img.getBoundingClientRect();
+    sensorData.position_x = window.pageXOffset + clientRect.left;
+    sensorData.position_y = window.pageYOffset + clientRect.top;
+}
+
 // デバイスの方向の変化を検出したとき
 window.addEventListener('deviceorientation', function(e) {
     sensorData.alpha = e.alpha;
@@ -22,8 +38,8 @@ var touchMoveY;
 window.addEventListener("touchstart", function(event) {
     event.preventDefault();
     // 座標の取得
-    touchStartX = sensorData.tap_x = event.touches[0].pageX;
-    touchStartY = sensorData.tap_y = event.touches[0].pageY;
+    touchStartX = sensorData.tap_position_x = event.touches[0].pageX;
+    touchStartY = sensorData.tap_position_x = event.touches[0].pageY;
 }, { passive: false });
 
 // タップの移動

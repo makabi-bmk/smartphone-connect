@@ -1,7 +1,11 @@
+const { REQUEST } = require("./header");
+
 const con = new WebSocket('ws://localhost:8081/');
 var isCommunicatable = true;
 
 window.onload = function() {
+    resetAll();
+
     try {
         con.onopen = function() {
             console.log('coを開始しました');
@@ -9,45 +13,52 @@ window.onload = function() {
     } catch (error) {
         console.log(error);
     }
-    //while (sensorData.smartphone_ID == 0) {
-        sendData(1);
-    //}
+    //ここ数秒おきにきくことにしよう
+    sendData(REQUEST.getID);
 };
 
 con.onmessage = function(ms) {
     var receivedData = JSON.parse(ms.data);
-    var request_num = receivedData["request_num"];
+    var request_num = receivedData[DATA_NAME.request_num];
     isCommunicatable = true;
 
     console.log("res = " + ms.data);
     
     switch(request_num) {
-        case 0:
+        case REQUEST.none:
             break;
-        case 1:
-            sensorData.smartphone_ID = receivedData["smartphone_ID"];
+        case REQUEST.getID:
+            sensorData.smartphone_ID = receivedData[DATA_NAME.smartphone_ID];
             alert("IDは" + sensorData.smartphone_ID + "です");
             var IDtext = document.getElementById("ID");
             IDtext.innerHTML = "ID : " + sensorData.smartphone_ID;
             break;
 
-        case 2:
-            var flag = receivedData["flag"];            
-            if (flag & 1)   reset();
-            else {
-                if (flag & 2)   changeBackImage(receivedData["back_image_num"]);
-                if (flag & 4)   changeImage(receivedData["image_num"]);
-                if (flag & 8)   changeMessage(receivedData["message"]);
-                if (flag & 16)  dispAlert(receivedData["alert_message"]);
-                if (flag & 32)  playAudio(receivedData["bgm_num"]);
-                if (flag & 64)  changeImagePosition(receivedData["pos_x"], receivedData["pos_y"]);
-                if (flag & 128) changeImageSize(receivedData["size"]);
-            }
-            sensorData.scratch_ID = receivedData["scratch_ID"];
-            sendData(2);
+        case REQUEST.connect:
+            setImagePosition();
+            sensorData.scratch_ID = receivedData[DATA_NAME.scratch_ID];
+            sendData(REQUEST.connect);
+            orderEvent(receivedData);
+            resetTouch();
             break;
     }
 };
+
+function orderEvent(data) {
+    var flag = data[DATA_NAME.flag];            
+            if (flag & 1) resetAll();
+            else {
+                if (flag & 2)    changeBackImage(data[DATA_NAME.back_image_num]);
+                if (flag & 4)    changeImage(data[DATA_NAME.image_num]);
+                if (flag & 8)    changeMessage(data[DATA_NAME.message]);
+                if (flag & 16)   dispAlert(data[DATA_NAME.alert_message]);
+                if (flag & 32)   playAudio(data[DATA_NAME.audio_num]);
+                if (flag & 64)   changeImagePosition(data[DATA_NAME.position_x], data[DATA_NAME.position_y]);
+                if (flag & 128)  changeImageSize(data[DATA_NAME.size]);
+                if (flag & 256)  rotateImage(data[DATA_NAME.angle]);
+                if (flag & 1024) changeVisibility(data[DATA_NAME.view]);
+            }
+}
 
 function sendData(request_num) {
     if (isCommunicatable == false) return;
@@ -60,8 +71,10 @@ function sendData(request_num) {
     } catch (error) {
         console.log(error);
     }
-} 
+}
 
+
+// これ動いてないんじゃないかな
 window.onbeforeunload = function(e) {
     e.returnValue = "ページを離れようとしています。よろしいですか？";
     con.close();
