@@ -5,6 +5,8 @@ const server = require('ws').Server;
 const ws = new server({ port: 8081 });
 const MAX_ACCESS_NUM = 50;
 const DATA_NAME = header.DATA_NAME;
+const TYPE = header.TYPE;
+const REQUEST = header.REQUEST;
 
 //IDは各クライアントでの初期値を0とするため1から始める
 var smartphoneID = 1;
@@ -22,22 +24,20 @@ ws.on('connection', socket => {
 
   socket.on('message', ms => {
 
-    console.log("ms = " + ms);
+    console.log("受け取ったデータ = " + ms);
     var receivedData = JSON.parse(ms);
-
-    console.log("request_num = " + receivedData[DATA_NAME.request_num]);
 
     var request_num = receivedData[DATA_NAME.request_num];
     var type = receivedData[DATA_NAME.type];
 
     //スマホからのリクエスト
     if (type == TYPE.smartphone) {
+      console.log("送信者:スマホ");
       switch(request_num) {
-        case 0:
+        case REQUEST.none:
           //これブロードキャスト通信できる
           /*
           ws.clients.forEach(client => {
-            console.log("typeof(client) = " + typeof(client));
             client.send(ms);
           });
         */
@@ -45,7 +45,7 @@ ws.on('connection', socket => {
           break;
 
         // スマホにIDを割り振る
-        case 1:
+        case REQUEST.getID:
           var newID = smartphoneID;
           var res = {smartphone_ID : newID, request_num : header.REQUEST.getID};
           if (isAccessOK(newID)) {
@@ -61,7 +61,7 @@ ws.on('connection', socket => {
           break;
 
         // scratchにスマホのデータを送る
-        case 2:
+        case REQUEST.connect:
           sendData(TYPE.scratch, receivedData[DATA_NAME.scratch_ID], getSensorData(receivedData));
           break;
       }
@@ -69,10 +69,11 @@ ws.on('connection', socket => {
 
     //scratchからのリクエスト
     else if (type == TYPE.scratch) {
+      console.log("送信者:scratch");
       switch(request_num) {
-        case 0:
+        case REQUEST.none:
           break;
-        case 1:
+        case REQUEST.getID:
           // scratchにIDを割り振る
           var newID = scratchID;
           var res = {scratch_ID : newID, request_num : header.REQUEST.getID};
@@ -86,7 +87,7 @@ ws.on('connection', socket => {
           }
           socket.send(JSON.stringify(res));
           break;
-        case 2:
+        case REQUEST.connect:
           // スマホへ命令するデータを送る
           if (!sendData(TYPE.smartphone, receivedData[DATA_NAME.smartphone_ID], getOrderData(receivedData))) {
             socket.send(JSON.stringify(header.sensorData));
@@ -110,11 +111,12 @@ function sendData(type, ID, data) {
   if (existSocket(type, ID)) {
     switch(type) {
       case TYPE.smartphone:
-        console.log("送信:smartphoneSockets[" + ID + "]へ : " + smartphoneSockets[ID]);
+        console.log("スマホに送るデータ:" + JSON.stringify(data));
         smartphoneSockets[ID].send(JSON.stringify(data));
         break;
       
       case TYPE.scratch:
+        console.log("scratchに送るデータ:" + JSON.stringify(data));
         scratchSockets[ID].send(JSON.stringify(data));
         break;
     }
@@ -134,19 +136,21 @@ function existSocket(type, ID) {
   switch(type) {
     case TYPE.smartphone:
       if ((0 <= ID && ID < MAX_ACCESS_NUM) && smartphoneSockets[ID] != null) return true;
-      else false;
+      else return false;
       break;
     
     case TYPE.scratch:
       if ((0 <= ID && ID < MAX_ACCESS_NUM) && scratchSockets[ID] != null) return true;
-      else false;
+      else return false;
       break;
   }
+  return false;
 }
 
 function getSensorData(data) {
   var sensorData = header.sensorData;
   var DATA_NAME = header.DATA_NAME;
+  sensorData.request_num      = data[DATA_NAME.request_num];
   sensorData.smartphone_ID    = data[DATA_NAME.smartphone_ID];
   sensorData.scratch_ID       = data[DATA_NAME.scratch_ID];
   sensorData.alpha            = data[DATA_NAME.alpha];

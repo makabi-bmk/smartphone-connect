@@ -61,7 +61,9 @@ function changeImageSize(size) {
 // TODO: ここ上限値決める
 function changeImagePosition(posX, posY) {
     var img = document.getElementById("image");
-    img.style.position = "absolute";
+    console.log("場所動かすよい");
+    console.log("縦");
+    //img.style.position = "absolute";
     if (posX < 0) img.style.top = posX + "px";
     if (posY < 0) img.style.left = posY + "px";
 }
@@ -100,7 +102,7 @@ function resetAll() {
     changeImage(0);
     changeBackImage(0);
     changeImageSize(70);
-    changeImagePosition(0, 0);
+    //changeImagePosition(0, 0);
     changeMessage("Hello World!");
 }
 
