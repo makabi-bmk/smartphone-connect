@@ -31,17 +31,17 @@ function rotateImage(angle){
 
 // 画像を変更する
 function changeImage(num) {
-    var fileName = "../image/image" + num + ".png";
+    var path = "./image/image" + num + ".png";
     if (0 <= num && num < IMAGE_NUM) {
-        document.getElementById("image").src = fileName;
+        document.getElementById("image").src = path;
     }
 }
 
 // 背景画像を変更する
 function changeBackImage(num) {
-    var fileName = "../back_image/back_image" + num + ".png";
+    var path = "./back_image/back_image" + num + ".png";
     if (0 <= num && num < BACK_IMAGE_NUM) {
-        document.getElementById("back_image").src = fileName;
+        document.getElementById("back_image").src = path;
     }
 }
 
