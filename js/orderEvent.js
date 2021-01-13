@@ -41,7 +41,7 @@ function changeImage(num) {
 function changeBackImage(num) {
     var path = "../back_image/back_image" + num + ".png";
     if (0 <= num && num < BACK_IMAGE_NUM) {
-        document.getElementById("body").style.backgroundImage = "url(" + path + ")";
+        document.getElementById("body").style.backgroundImage = 'url("' + path + '")';
     }
 }
 

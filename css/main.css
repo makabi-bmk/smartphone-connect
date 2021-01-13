@@ -1,7 +1,7 @@
 /* TODO: サイズの調整しないといけない */
 
 body {
-    background-image: url(../back_image/back_image0.png);
+    background-image: url("../back_image/back_image0.png");
     background-size: contain;
 }
 
