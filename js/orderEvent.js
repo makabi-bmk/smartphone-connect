@@ -99,7 +99,7 @@ function resetAll() {
     setInputText("");
     changeButtonText("ボタン");
     rotateImage(0);
-    changeImage(0);
+    //changeImage(0);
     changeBackImage(0);
     changeImageSize(70);
     //changeImagePosition(0, 0);
