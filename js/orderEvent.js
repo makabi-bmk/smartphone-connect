@@ -16,9 +16,8 @@ function setInputText() {
 
 // ボタンの文字を変更する
 function changeButtonText(text) {
-    var button = document.getElementById("button");
     if (text.length < MAX_BUTTON_TEXT_LENGTH) {
-        button.value = text;
+        document.getElementById("button").value = text;
     }
 }
 
