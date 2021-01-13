@@ -39,7 +39,7 @@ function changeImage(num) {
 
 // 背景画像を変更する
 function changeBackImage(num) {
-    var path = "../back_image/back_image" + num + ".png";
+    var path = "./back_image/back_image" + num + ".png";
     if (0 <= num && num < BACK_IMAGE_NUM) {
         document.getElementById("body").style.backgroundImage = 'url("' + path + '")';
     }
