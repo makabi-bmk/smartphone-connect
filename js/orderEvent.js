@@ -101,7 +101,7 @@ function resetAll() {
     changeImage(0);
     changeBackImage(0);
     //changeImageSize(70);
-    //changeImagePosition(0, 0);
+    changeImagePosition(0, 0);
     changeMessage("Hello World!");
 }
 
