@@ -62,7 +62,7 @@ function changeImagePosition(posX, posY) {
     var img = document.getElementById("image");
     console.log("場所動かすよい");
     console.log("縦");
-    //img.style.position = "absolute";
+    img.style.position = "absolute";
     if (posX < 0) img.style.top = posX + "px";
     if (posY < 0) img.style.left = posY + "px";
 }

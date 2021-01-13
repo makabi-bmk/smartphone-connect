@@ -19,7 +19,7 @@ body {
 }
 
 #image {
-    position: "absolute";
+    /* position: absolute; */
     /* z-index: 2; */
     height: 70%;
 }
