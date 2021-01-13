@@ -23,7 +23,7 @@ function changeButtonText(text) {
 }
 
 // 画像を回転する
-function rotateImage(angle){
+function rotateImage(angle) {
     var img = document.getElementById("image");
     sensorData.angle = angle;
     img.style.transform = "rotate(" + angle + "deg)";
@@ -39,9 +39,9 @@ function changeImage(num) {
 
 // 背景画像を変更する
 function changeBackImage(num) {
-    var path = "./back_image/back_image" + num + ".png";
+    var path = "../back_image/back_image" + num + ".png";
     if (0 <= num && num < BACK_IMAGE_NUM) {
-        document.getElementById("back_image").src = path;
+        document.getElementById("body").style.backgroundImage = path;
     }
 }
 
