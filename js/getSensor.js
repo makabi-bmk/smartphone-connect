@@ -1,4 +1,4 @@
-var imageSize = 70;
+var imageSize = 60;
 var imageAngle = 0;
 
 // オブジェクトをタッチされたとき

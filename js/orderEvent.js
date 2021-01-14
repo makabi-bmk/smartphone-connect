@@ -46,11 +46,12 @@ function changeBackImage(num) {
 
 // 画像の大きさを変更する(%)
 function changeImageSize(size) {
-    var img = document.getElementById("image");
-    imageSize = (size / 100) * screenWidth;
-    sensorData.size = size;
+    var image = document.getElementById("image");
+    //imageSize = (size / 100) * screenWidth;
+    //sensorData.size = size;
     if (0 < size && size < MAX_SIZE) {
-        img.width = imageSize;
+        image.style.width = size + "%";
+        image.width = imageSize;
     }
     //img.height = orgHeight * (img.width / orgWidth);
 }
@@ -62,7 +63,6 @@ function changeImagePosition(posX, posY) {
     var image = document.getElementById("image");
     console.log("場所動かすよい");
     console.log("縦");
-    //image.style.position = "absolute";
     if (posX >= 0) image.style.top = posX + "px";
     if (posY >= 0) image.style.left = posY + "px";
 }
@@ -100,8 +100,8 @@ function resetAll() {
     rotateImage(0);
     changeImage(0);
     changeBackImage(0);
-    //changeImageSize(70);
-    changeImagePosition(80, 80);
+    changeImageSize(60);
+    changeImagePosition(100, 100);
     changeMessage("Hello World!");
 }
 
