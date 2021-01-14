@@ -51,7 +51,7 @@ function changeImageSize(size) {
     //sensorData.size = size;
     if (0 < size && size < MAX_SIZE) {
         image.style.width = size + "%";
-        image.width = imageSize;
+        // image.width = imageSize;
     }
     //img.height = orgHeight * (img.width / orgWidth);
 }
