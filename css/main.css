@@ -1,27 +1,20 @@
 /* TODO: サイズの調整しないといけない */
 
 body {
-    background-image: url("./back_image/back_image0.png");
     background-size: 100% auto;
 }
 
 #image_div {
-    /* position: relative; */
-    /* z-index: 1; */
     margin: 0px;
     padding: 0px;
 }
 
 #back_image {
-    /* position: fixed; */
-    /* z-index: 0; */
     height: 70%;
 }
 
 #image {
     position: absolute;
-    /* z-index: 2; */
-    /* height: 40%; */
 }
 
 h1 {
