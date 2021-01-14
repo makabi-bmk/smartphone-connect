@@ -59,12 +59,12 @@ function changeImageSize(size) {
 // 片方の値のみしか移動させたくない場合は-1が代入される
 // TODO: ここ上限値決める
 function changeImagePosition(posX, posY) {
-    var img = document.getElementById("image");
+    var image = document.getElementById("image");
     console.log("場所動かすよい");
     console.log("縦");
-    img.style.position = "absolute";
-    if (posX < 0) img.style.top = posX + "px";
-    if (posY < 0) img.style.left = posY + "px";
+    //image.style.position = "absolute";
+    if (posX >= 0) image.style.top = posX;
+    if (posY >= 0) image.style.left = posY;
 }
 
 //吹き出しの文字を変更させる
