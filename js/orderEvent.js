@@ -63,8 +63,8 @@ function changeImagePosition(posX, posY) {
     console.log("場所動かすよい");
     console.log("縦");
     //image.style.position = "absolute";
-    if (posX >= 0) image.style.top = posX;
-    if (posY >= 0) image.style.left = posY;
+    if (posX >= 0) image.style.top = posX + "px";
+    if (posY >= 0) image.style.left = posY + "px";
 }
 
 //吹き出しの文字を変更させる
