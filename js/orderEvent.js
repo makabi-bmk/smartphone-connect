@@ -94,15 +94,12 @@ function resetAll() {
     changeVisibility(true);
     setInputText("");
     changeButtonText("ボタン");
-    rotateImage(0);
-    changeImage(0);
+    rotateImage(DEFAULT_ANGLE);
+    changeImage(DEFAULT_SIZE);
     changeBackImage(0);
     changeImageSize(60);
     changeImagePosition(100, 100);
     changeMessage("Hello World!");
-
-    sensorData.angle = 0;
-    sensorData.size = 60;
 }
 
 function resetTouch() {

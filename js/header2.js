@@ -3,13 +3,17 @@ const IMAGE_NUM = 8;
 // 背景画像の数
 const BACK_IMAGE_NUM = 13;
 // オブジェクトのサイズの上限
-const MAX_SIZE = 200;
+const MAX_SIZE = 100;
 // アラートで表示する文字数の上限
 const MAX_ALERT_LENGTH = 100;
 // ボタンの文字数の上限
 const MAX_BUTTON_TEXT_LENGTH = 30;
 // メッセージの文字数の上限
 const MAX_MESSAGE_LENGTH = 100;
+
+// オブジェクトの大きさと角度の初期値
+const DEFAULT_SIZE = 60;
+const DEFAULT_ANGLE = 0;
 
 const TYPE = {
     smartphone : 0,
@@ -72,7 +76,7 @@ var sensorData = {
     beta : 0,
     gamma : 0,
     angle : 0,
-    size: 100,
+    size: 60,
     position_x : 0,
     position_y : 0,
     acceleration_x : 0,
