@@ -47,13 +47,10 @@ function changeBackImage(num) {
 // 画像の大きさを変更する(%)
 function changeImageSize(size) {
     var image = document.getElementById("image");
-    //imageSize = (size / 100) * screenWidth;
-    //sensorData.size = size;
     if (0 < size && size < MAX_SIZE) {
         image.style.width = size + "%";
-        // image.width = imageSize;
+        sensorData.size = size;
     }
-    //img.height = orgHeight * (img.width / orgWidth);
 }
 
 // 画像の場所を移動させる
@@ -103,6 +100,9 @@ function resetAll() {
     changeImageSize(60);
     changeImagePosition(100, 100);
     changeMessage("Hello World!");
+
+    sensorData.angle = 0;
+    sensorData.size = 60;
 }
 
 function resetTouch() {

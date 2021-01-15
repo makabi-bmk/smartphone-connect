@@ -1,6 +1,3 @@
-var imageSize = 60;
-var imageAngle = 0;
-
 // オブジェクトをタッチされたとき
 function clickedImage() {
     sensorData.image_touch = true;

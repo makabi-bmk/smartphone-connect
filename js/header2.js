@@ -11,8 +11,6 @@ const MAX_BUTTON_TEXT_LENGTH = 30;
 // メッセージの文字数の上限
 const MAX_MESSAGE_LENGTH = 100;
 
-
-
 const TYPE = {
     smartphone : 0,
     scratch : 1
