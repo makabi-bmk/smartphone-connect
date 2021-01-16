@@ -24,6 +24,15 @@
   </form>
   <a id="button" href="javascript:void(0);"><p id="button_text"></p></a>
 
+  <script type="text/javascript">
+  $('#button').click(function(evt){
+    console.log("オブジェクトが押された");
+    sensorData.image_touch = true;
+    //location.href = location.href + '#h';
+    return false;
+  });
+  </script>
+
   <div id="image_div">
     <img id="image" src="./image/image0.png" onclick="alert('画像がクリックされた');">
   </div>
