@@ -66,8 +66,14 @@ function changeImageSize(size) {
 function changeImagePosition(posX, posY) {
     console.log("移動:x" + posX + ", y" + posY);
     var image = document.getElementById("image");
-    if (posX >= 0) image.style.top = posX + "px";
-    if (posY >= 0) image.style.left = posY + "px";
+    if (posX >= 0) {
+        image.style.top = posX + "px";
+        sensorData.position_x = posX;
+    }
+    if (posY >= 0) {
+        image.style.left = posY + "px";
+        sensorData.position_y = posY;
+    }
 }
 
 //吹き出しの文字を変更させる
@@ -107,7 +113,7 @@ function resetAll() {
     changeImage(DEFAULT_SIZE);
     changeBackImage(0);
     changeImageSize(60);
-    changeImagePosition(100, 100);
+    changeImagePosition(DEFAULT_POS_X, DEFAULT_POS_Y);
     changeMessage("Hello World!");
 }
 

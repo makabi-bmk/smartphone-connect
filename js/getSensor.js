@@ -4,13 +4,13 @@ function clickedImage() {
     sensorData.image_touch = true;
 }
 
-// オブジェクトの位置を検知する
-function setImagePosition() {
-    var img = document.getElementById("image");
-    var clientRect = img.getBoundingClientRect();
-    sensorData.position_x = window.pageXOffset + clientRect.left;
-    sensorData.position_y = window.pageYOffset + clientRect.top;
-}
+// // オブジェクトの位置を検知する
+// function setImagePosition() {
+//     var img = document.getElementById("image");
+//     var clientRect = img.getBoundingClientRect();
+//     sensorData.position_x = window.pageXOffset + clientRect.left;
+//     sensorData.position_y = window.pageYOffset + clientRect.top;
+// }
 
 // デバイスの方向の変化を検出したとき
 window.addEventListener('deviceorientation', function(e) {
