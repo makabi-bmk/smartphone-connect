@@ -1,22 +1,8 @@
-// オブジェクトをタッチされたとき
-// function clickedImage() {
-//     console.log("オブジェクトが押された");
-//     sensorData.image_touch = true;
-// }
-
 $('document').on('click', '#button', function(evt) {
     // メニューを開いたり閉じたりする処理
     console.log("オブジェクトが押された");
     sensorData.image_touch = true;
 });
-
-// // オブジェクトの位置を検知する
-// function setImagePosition() {
-//     var img = document.getElementById("image");
-//     var clientRect = img.getBoundingClientRect();
-//     sensorData.position_x = window.pageXOffset + clientRect.left;
-//     sensorData.position_y = window.pageYOffset + clientRect.top;
-// }
 
 // デバイスの方向の変化を検出したとき
 window.addEventListener('deviceorientation', function(e) {
@@ -45,6 +31,10 @@ window.addEventListener("touchstart", function(event) {
     // 座標の取得
     touchStartX = sensorData.tap_position_x = event.touches[0].pageX;
     touchStartY = sensorData.tap_position_x = event.touches[0].pageY;
+
+    // 触った要素の判定
+    var target = document.elementFromPoint(touchStartX, touchStartY);
+    console.log("target = " + target);
 }, { passive: false });
 
 // タップの移動
