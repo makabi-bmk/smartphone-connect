@@ -1,8 +1,12 @@
-$('document').on('click', '#button', function(evt) {
-    // メニューを開いたり閉じたりする処理
-    console.log("オブジェクトが押された");
+function clickedButton() {
+    console.log("ボタンが押された");
     sensorData.image_touch = true;
-});
+}
+
+function clickedImage() {
+    console.log("オブジェクトが押された");
+    sensorData.button_click = true;
+}
 
 // デバイスの方向の変化を検出したとき
 window.addEventListener('deviceorientation', function(e) {
