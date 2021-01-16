@@ -20,7 +20,7 @@ function setInputText() {
 function changeButtonText(text) {
     console.log("ボタンの文字:" + text);
     if (text.length < MAX_BUTTON_TEXT_LENGTH) {
-        document.getElementById("button").value = text;
+        document.getElementById("button").setAttribute("value", text);
     }
 }
 
