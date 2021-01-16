@@ -1,5 +1,6 @@
 // オブジェクトをタッチされたとき
 function clickedImage() {
+    console.log("オブジェクトが押された");
     sensorData.image_touch = true;
 }
 
