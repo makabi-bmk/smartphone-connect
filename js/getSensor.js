@@ -4,12 +4,18 @@
 //     sensorData.image_touch = true;
 // }
 
-$('#button').click(function(evt){
+// $('#button').click(function(evt){
+//     console.log("オブジェクトが押された");
+//     sensorData.image_touch = true;
+//     //location.href = location.href + '#h';
+//     return false;
+// });
+
+$('document').on('click', '#button', function(evt) {
+    // メニューを開いたり閉じたりする処理
     console.log("オブジェクトが押された");
     sensorData.image_touch = true;
-    //location.href = location.href + '#h';
-    return false;
-});
+  });
 
 // // オブジェクトの位置を検知する
 // function setImagePosition() {
