@@ -1,8 +1,15 @@
 // オブジェクトをタッチされたとき
-function clickedImage() {
+// function clickedImage() {
+//     console.log("オブジェクトが押された");
+//     sensorData.image_touch = true;
+// }
+
+$('#button').click(function(evt){
     console.log("オブジェクトが押された");
     sensorData.image_touch = true;
-}
+    //location.href = location.href + '#h';
+    return false;
+});
 
 // // オブジェクトの位置を検知する
 // function setImagePosition() {
