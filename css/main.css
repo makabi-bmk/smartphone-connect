@@ -15,10 +15,15 @@ body {
 
 #image {
     position: absolute;
+    cursor: pointer;
 }
 
 h1 {
     background-color: blue;
+}
+
+input {
+    cursor: pointer;
 }
 
 .balloon {
