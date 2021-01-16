@@ -35,7 +35,7 @@ window.addEventListener("touchstart", function(event) {
     // 触った要素の判定
     var target = document.elementFromPoint(touchStartX, touchStartY);
     console.log("target = " + target.id);
-}, { passive: false });
+}, { passive: true });
 
 // タップの移動
 window.addEventListener("touchmove", function(event) {
