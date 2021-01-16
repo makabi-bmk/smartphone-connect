@@ -55,6 +55,7 @@ function orderEvent(data) {
                 if (flag & 64)   changeImagePosition(data[DATA_NAME.position_x], data[DATA_NAME.position_y]);
                 if (flag & 128)  changeImageSize(data[DATA_NAME.size]);
                 if (flag & 256)  rotateImage(data[DATA_NAME.angle]);
+                if (flag & 512)  changeButtonText(data[DATA_NAME.button_text]);
                 if (flag & 1024) changeVisibility(data[DATA_NAME.view]);
             }
 }
