@@ -15,7 +15,7 @@ const MAX_MESSAGE_LENGTH = 100;
 const DEFAULT_SIZE = 60;
 const DEFAULT_ANGLE = 0;
 const DEFAULT_POS_X = 0;
-const DEFAULT_POS_Y = 150;
+const DEFAULT_POS_Y = 200;
 
 const TYPE = {
     smartphone : 0,
