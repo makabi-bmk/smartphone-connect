@@ -1,7 +1,7 @@
 /* TODO: サイズの調整しないといけない */
 
 body {
-    background-size: 100% auto;
+    background-size: auto 100%;
     background-repeat: no-repeat;
 }
 
