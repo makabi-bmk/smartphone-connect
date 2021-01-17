@@ -1,11 +1,12 @@
 html {
     height: 100%;
+    margin: 0;
 }
 
 body {
-    height: 720px;
+    height: 100%;
     margin: 0;
-    background-size: 120% auto;
+    background-size: 100% auto;
     background-repeat: no-repeat;
 }
 
