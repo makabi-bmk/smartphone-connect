@@ -31,20 +31,16 @@ var touchMoveY;
 // スワイプの開始(タップ)
 window.addEventListener("touchstart", function(event) {
     console.log("さわった");
-    //event.preventDefault();
+
     // 座標の取得
     touchStartX = sensorData.tap_position_x = event.touches[0].pageX;
     touchStartY = sensorData.tap_position_x = event.touches[0].pageY;
-
-    // 触った要素の判定
-    var target = document.elementFromPoint(touchStartX, touchStartY);
-    console.log("target = " + target.id);
 }, { passive: true });
 
 // タップの移動
 window.addEventListener("touchmove", function(event) {
     event.preventDefault();
-    console.log("うごいた");
+
     // 座標の取得
     touchMoveX = event.changedTouches[0].pageX;
     touchMoveY = event.changedTouches[0].pageY;
@@ -52,7 +48,6 @@ window.addEventListener("touchmove", function(event) {
 
 // タップの終了時(スワイプの判定)
 window.addEventListener("touchend", function(event) {
-    console.log("はなした");
     if (touchStartX > touchMoveX && touchStartX > (touchMoveX + 50)) {
         //右から左に指が移動した場合
         sensorData.swipe_horizontal = true;

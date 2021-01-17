@@ -58,16 +58,10 @@ const DATA_NAME = {
     message : "message",
     alert_message : "alert_message",
     view : "view",
-    audio_num : "audio_num"
+    audio_num : "audio_num",
+    screen_height : "screen_height",
+    screen_width : "screen_width"
 };
-
-// 端末の縦と横のウィンドウサイズを取得する
-window.onresize = window_load;
-var screenWidth, screenHeight;
-function window_load() {
-	screenWidth = window.innerWidth;
-	screenHeight = window.innerHeight;
-}
 
 var sensorData = {
     request_num : 0,
@@ -89,6 +83,8 @@ var sensorData = {
     voice_message : "",
     tap_position_x : 0,
     tap_position_y : 0,
+    screen_height : 0,
+    screen_width : 0,
     button_click : false,
     image_touch : false,
     swipe_vertical : false,

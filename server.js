@@ -168,6 +168,8 @@ function getSensorData(data) {
   sensorData.voice_message    = data[DATA_NAME.voice_message];
   sensorData.tap_position_x   = data[DATA_NAME.tap_position_x];
   sensorData.tap_position_y   = data[DATA_NAME.tap_position_y];
+  sensorData.screen_height    = data[DATA_NAME.screen_height];
+  sensorData.screen_width     = data[DATA_NAME.screen_width];
   sensorData.button_click     = data[DATA_NAME.button_click];
   sensorData.image_touch      = data[DATA_NAME.image_touch];
   sensorData.swipe_vertical   = data[DATA_NAME.swipe_vertical];
