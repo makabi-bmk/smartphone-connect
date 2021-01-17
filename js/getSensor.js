@@ -30,7 +30,6 @@ window.addEventListener('devicemotion', function(e) {
     sensorData.acceleration_z = e.acceleration.z;
 });
 
-//TODO: event.preventDefault()が動かないのと、縦方向のスワイプが検出できない
 var touchStartX;
 var touchStartY;
 var touchMoveX;
@@ -47,8 +46,6 @@ window.addEventListener("touchstart", function(event) {
 
 // タップの移動
 window.addEventListener("touchmove", function(event) {
-    //event.preventDefault();
-
     // 座標の取得
     touchMoveX = event.changedTouches[0].pageX;
     touchMoveY = event.changedTouches[0].pageY;

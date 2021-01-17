@@ -113,7 +113,7 @@ function resetAll() {
     changeImage(DEFAULT_SIZE);
     changeBackImage(0);
     changeImageSize(60);
-    changeImagePosition(DEFAULT_POS_X, DEFAULT_POS_Y);
+    changeImagePosition(DEFAULT_POS_Y, DEFAULT_POS_X);
     changeMessage("Hello World!");
 }
 

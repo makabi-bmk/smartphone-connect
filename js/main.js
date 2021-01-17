@@ -5,8 +5,7 @@ var isCommunicatable = true;
 window.onload = function() {
     resetAll();
     setScreenSize();
-
-    document.getElementById("body").style.backgroundSize = "360px 720px";
+    document.getElementById("body").style.backgroundSize = screen.width + "px " + screen.height + "px";
 
     try {
         con.onopen = function() {
