@@ -1,3 +1,17 @@
+window.onresize = setScreenSize;
+function setScreenSize() {
+    sensorData.screen_height = screen.height;
+    sensorData.screen_width = screen.width;
+}
+
+// // 端末の縦と横のウィンドウサイズを取得する
+// window.onresize = window_load;
+// var screenWidth, screenHeight;
+// function window_load() {
+// 	screenWidth = window.innerWidth;
+// 	screenHeight = window.innerHeight;
+// }
+
 function clickedButton() {
     console.log("ボタンが押された");
     sensorData.image_touch = true;

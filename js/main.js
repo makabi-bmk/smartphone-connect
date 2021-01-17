@@ -4,6 +4,7 @@ var isCommunicatable = true;
 
 window.onload = function() {
     resetAll();
+    setScreenSize();
 
     try {
         con.onopen = function() {
@@ -22,7 +23,7 @@ con.onmessage = function(ms) {
     isCommunicatable = true;
 
     console.log("res = " + ms.data);
-    
+
     switch(request_num) {
         case REQUEST.none:
             break;
