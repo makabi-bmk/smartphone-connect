@@ -4,7 +4,7 @@ body {
     background-size: 100% auto;
 }
 
-a {
+button {
     cursor: pointer;
 }
 
@@ -24,10 +24,6 @@ a {
 h1 {
     background-color: blue;
 }
-
-/* input {
-    cursor: pointer;
-} */
 
 .balloon {
     position: relative;

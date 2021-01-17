@@ -1,7 +1,9 @@
 window.onresize = setScreenSize;
 function setScreenSize() {
     sensorData.screen_height = screen.height;
+    console.log("height =  " + sensorData.screen_height);
     sensorData.screen_width = screen.width;
+    console.log("weight = " + sensorData.screen_width);
 }
 
 // // 端末の縦と横のウィンドウサイズを取得する
