@@ -47,12 +47,12 @@ window.addEventListener("touchstart", function(event) {
 
 // タップの移動
 window.addEventListener("touchmove", function(event) {
-    event.preventDefault();
+    //event.preventDefault();
 
     // 座標の取得
     touchMoveX = event.changedTouches[0].pageX;
     touchMoveY = event.changedTouches[0].pageY;
-}, { passive: false });
+}, { passive: true });
 
 // タップの終了時(スワイプの判定)
 window.addEventListener("touchend", function(event) {
