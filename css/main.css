@@ -1,6 +1,10 @@
-/* TODO: サイズの調整しないといけない */
+html {
+    height: 100%;
+}
 
 body {
+    height: 100%;
+    margin: 0;
     background-size: 120% auto;
     background-repeat: no-repeat;
 }
@@ -20,10 +24,6 @@ button {
 
 #image {
     position: absolute;
-}
-
-h1 {
-    background-color: blue;
 }
 
 .balloon {
