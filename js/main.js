@@ -11,7 +11,8 @@ window.onload = function() {
             console.log('coを開始しました');
         };
     } catch (error) {
-        console.log(error);
+        console.log("error:" + error);
+
     }
     //ここ数秒おきにきくことにしよう
     sendData(REQUEST.getID);
