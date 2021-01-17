@@ -14,7 +14,7 @@ const MAX_MESSAGE_LENGTH = 100;
 // オブジェクトの大きさと角度の初期値
 const DEFAULT_SIZE = 60;
 const DEFAULT_ANGLE = 0;
-const DEFAULT_POS_X = screen.width / 2;
+const DEFAULT_POS_X = 0;
 const DEFAULT_POS_Y = screen.height / 2;
 
 const TYPE = {
