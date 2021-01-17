@@ -72,6 +72,7 @@ function sendData(request_num) {
         isCommunicatable = false;
     } catch (error) {
         console.log(error);
+        location.reload(true);
     }
 }
 
