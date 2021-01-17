@@ -6,6 +6,8 @@ window.onload = function() {
     resetAll();
     setScreenSize();
 
+    document.getElementById("body").style.backgroundSize = "360px 720px";
+
     try {
         con.onopen = function() {
             console.log('coを開始しました');
