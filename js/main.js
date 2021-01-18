@@ -1,4 +1,4 @@
-const { REQUEST } = require("./header");
+// const { REQUEST } = require("./header");
 
 const con = new WebSocket('ws://localhost:8081/');
 var isCommunicatable = true;
