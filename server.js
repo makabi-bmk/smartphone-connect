@@ -11,12 +11,15 @@ const REQUEST = header.REQUEST;
 //IDは各クライアントでの初期値を0とするため1から始める
 var smartphoneID = 1;
 var scratchID = 1;
-var smartphoneSockets = [];
-var scratchSockets = [];
+var smartphoneSockets = {};
+var scratchSockets = {};
+
+/*
 for (var i = 0; i < MAX_ACCESS_NUM; i++) {
   smartphoneSockets.push(null);
   scratchSockets.push(null);
 }
+*/
 
 ws.on('connection', socket => {
   
@@ -51,7 +54,7 @@ ws.on('connection', socket => {
           var res = {smartphone_ID : newID, request_num : header.REQUEST.getID};
           if (isAccessOK(newID)) {
             res["status"] = 200;
-            smartphoneSockets[newID] = socket;
+            smartphoneSockets[newID.toString()] = socket;
             smartphoneID++;
           } else {
             var errorMessage = "アクセス数が上限に達しています。時間をおいて再度お試しください。";
@@ -65,6 +68,9 @@ ws.on('connection', socket => {
         case REQUEST.connect:
           sendData(TYPE.scratch, receivedData[DATA_NAME.scratch_ID], getSensorData(receivedData));
           break;
+        
+        case REQUEST.close:
+
       }
     }
 
@@ -79,7 +85,7 @@ ws.on('connection', socket => {
           var newID = scratchID;
           var res = {scratch_ID : newID, request_num : header.REQUEST.getID};
           if (isAccessOK(newID)) {
-            scratchSockets[newID] =  socket;
+            scratchSockets[newID.toString()] =  socket;
             scratchID++;
           } else {
             var errorMessage = "アクセス数が上限に達しています。時間をおいて再度お試しください。";
@@ -113,12 +119,12 @@ function sendData(type, ID, data) {
     switch(type) {
       case TYPE.smartphone:
         console.log("スマホに送るデータ:" + JSON.stringify(data));
-        smartphoneSockets[ID].send(JSON.stringify(data));
+        smartphoneSockets[ID.toString()].send(JSON.stringify(data));
         break;
       
       case TYPE.scratch:
         console.log("scratchに送るデータ:" + JSON.stringify(data));
-        scratchSockets[ID].send(JSON.stringify(data));
+        scratchSockets[ID.toString()].send(JSON.stringify(data));
         break;
     }
     return true;
@@ -136,12 +142,12 @@ function isAccessOK(ID) {
 function existSocket(type, ID) {
   switch(type) {
     case TYPE.smartphone:
-      if ((0 <= ID && ID < MAX_ACCESS_NUM) && smartphoneSockets[ID] != null) return true;
+      if (smartphoneSockets[ID.toString()] != null) return true;
       else return false;
       break;
     
     case TYPE.scratch:
-      if ((0 <= ID && ID < MAX_ACCESS_NUM) && scratchSockets[ID] != null) return true;
+      if (scratchSockets[ID.toString()] != null) return true;
       else return false;
       break;
   }

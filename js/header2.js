@@ -25,7 +25,8 @@ const TYPE = {
 const REQUEST = {
     none : 0,
     getID : 1,
-    connect : 2
+    connect : 2,
+    close : 3
 };
 
 const DATA_NAME = {
