@@ -5,16 +5,12 @@ html {
 
 body {
     height: 100%;
-    margin: 0;
+    background-size: contain;
     background-repeat: no-repeat;
 }
 
 button {
     cursor: pointer;
-}
-
-#back_image {
-    height: 70%;
 }
 
 #image {
