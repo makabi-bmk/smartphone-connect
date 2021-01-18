@@ -35,6 +35,7 @@ ws.on('connection', socket => {
       console.log("送信者:スマホ");
       switch(request_num) {
         case REQUEST.none:
+          console.log("スマホからの接続きれた");
           //これブロードキャスト通信できる
           /*
           ws.clients.forEach(client => {

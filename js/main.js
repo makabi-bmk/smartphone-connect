@@ -1,3 +1,5 @@
+const { REQUEST } = require("./header");
+
 const con = new WebSocket('ws://localhost:8081/');
 var isCommunicatable = true;
 
@@ -78,6 +80,7 @@ function sendData(request_num) {
 
 // これ動いてないんじゃないかな
 window.addEventListener("beforeunload", function(e) {
+    sendData(REQUEST.none);
+    con.close();
     e.returnValue = "ページを移動します";
-    location.reload(true);
 }, false)
