@@ -77,9 +77,7 @@ function sendData(request_num) {
     }
 }
 
-
 // これ動いてないんじゃないかな
-window.onbeforeunload = function(e) {
-    e.returnValue = "ページを離れようとしています。よろしいですか？";
-    con.close();
-}
+window.addEventListener("beforeunload", function(e) {
+    e.returnValue = "ページを移動します";
+}, false)
