@@ -1,4 +1,4 @@
-const { sensorData } = require("./header");
+// const { sensorData } = require("./header");
 
 window.onresize = setScreenSize;
 function setScreenSize() {

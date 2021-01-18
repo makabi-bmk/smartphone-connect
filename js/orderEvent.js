@@ -1,4 +1,4 @@
-const { sensorData } = require("./header");
+// const { sensorData } = require("./header");
 
 // 画像の表示/非表示を切り替える
 function changeVisibility(isVisiable) {
