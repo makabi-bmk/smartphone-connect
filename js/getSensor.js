@@ -10,12 +10,12 @@ function setScreenSize() {
 
 function clickedButton() {
     console.log("ボタンが押された");
-    sensorData.image_touch = true;
+    sensorData.button_click = true;
 }
 
 function clickedImage() {
     console.log("オブジェクトが押された");
-    sensorData.button_click = true;
+    sensorData.image_touch = true;
 }
 
 // 入力された文字を取得する
