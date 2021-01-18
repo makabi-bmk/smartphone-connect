@@ -53,9 +53,10 @@ window.addEventListener("touchstart", function(event) {
 // タップの移動
 window.addEventListener("touchmove", function(event) {
     // 座標の取得
+    event.preventDefault();
     touchMoveX = event.changedTouches[0].pageX;
     touchMoveY = event.changedTouches[0].pageY;
-}, { passive: true });
+}, { passive: false });
 
 // タップの終了時(スワイプの判定)
 window.addEventListener("touchend", function(event) {
