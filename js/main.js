@@ -73,11 +73,11 @@ function sendData(request_num) {
         isCommunicatable = false;
     } catch (error) {
         console.log(error);
-        location.reload(true);
     }
 }
 
 // これ動いてないんじゃないかな
 window.addEventListener("beforeunload", function(e) {
     e.returnValue = "ページを移動します";
+    location.reload(true);
 }, false)
