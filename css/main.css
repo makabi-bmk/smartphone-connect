@@ -13,11 +13,6 @@ button {
     cursor: pointer;
 }
 
-#image_div {
-    margin: 0px;
-    padding: 0px;
-}
-
 #back_image {
     height: 70%;
 }
