@@ -3,11 +3,11 @@
 // 画像の表示/非表示を切り替える
 function changeVisibility(isVisiable) {
     console.log("オブジェクトの表示:" + isVisiable);
-    var img = document.getElementById("image");
+    var image = document.getElementById("image");
     if (isVisiable) {
-        img.style.visibility = "visible";
+        image.style.visibility = "visible";
     } else {
-        img.style.visibility = "false";
+        image.style.visibility = "hidden";
     }
 }
 
