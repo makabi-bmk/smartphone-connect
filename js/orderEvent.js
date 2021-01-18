@@ -1,3 +1,5 @@
+const { sensorData } = require("./header");
+
 // 画像の表示/非表示を切り替える
 function changeVisibility(isVisiable) {
     console.log("オブジェクトの表示:" + isVisiable);
@@ -7,13 +9,6 @@ function changeVisibility(isVisiable) {
     } else {
         img.style.visibility = "false";
     }
-}
-
-// 入力された文字を取得する
-function setInputText() {
-    var inputText = document.getElementById("input_text");
-    console.log("入力文字:" + inputText);
-    sensorData.input_text = inputText.value;
 }
 
 // ボタンの文字を変更する

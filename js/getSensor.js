@@ -1,3 +1,5 @@
+const { sensorData } = require("./header");
+
 window.onresize = setScreenSize;
 function setScreenSize() {
     sensorData.screen_height = screen.height;
@@ -14,6 +16,12 @@ function clickedButton() {
 function clickedImage() {
     console.log("オブジェクトが押された");
     sensorData.button_click = true;
+}
+
+// 入力された文字を取得する
+function setInputText() {
+    sensorData.input_text = document.getElementById("input_text").value;
+    console.log("入力された文字 = " + sensorData.input_text);
 }
 
 // デバイスの方向の変化を検出したとき
@@ -37,8 +45,6 @@ var touchMoveY;
 
 // スワイプの開始(タップ)
 window.addEventListener("touchstart", function(event) {
-    console.log("さわった");
-
     // 座標の取得
     touchStartX = sensorData.tap_position_x = event.touches[0].pageX;
     touchStartY = sensorData.tap_position_x = event.touches[0].pageY;

@@ -37,7 +37,7 @@ con.onmessage = function(ms) {
             break;
 
         case REQUEST.connect:
-            //setImagePosition();
+            setInputText();
             sensorData.scratch_ID = receivedData[DATA_NAME.scratch_ID];
             sendData(REQUEST.connect);
             orderEvent(receivedData);
