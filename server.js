@@ -1,9 +1,7 @@
-// index.js
-
 const header = require("./js/header.js");
 const server = require('ws').Server;
 const ws = new server({ port: 8081 });
-const MAX_ACCESS_NUM = 50;
+const MAX_ACCESS_NUM = 80;
 const DATA_NAME = header.DATA_NAME;
 const TYPE = header.TYPE;
 const REQUEST = header.REQUEST;
@@ -13,13 +11,6 @@ var smartphoneID = 1;
 var scratchID = 1;
 var smartphoneSockets = {};
 var scratchSockets = {};
-
-/*
-for (var i = 0; i < MAX_ACCESS_NUM; i++) {
-  smartphoneSockets.push(null);
-  scratchSockets.push(null);
-}
-*/
 
 ws.on('connection', socket => {
   
@@ -51,7 +42,7 @@ ws.on('connection', socket => {
         case REQUEST.getID:
           var newID = smartphoneID;
           var res = {smartphone_ID : newID, request_num : header.REQUEST.getID};
-          if (isAccessOK(newID)) {
+          if (isAccessOK(TYPE.smartphone, newID)) {
             res["status"] = 200;
             smartphoneSockets[newID.toString()] = socket;
             smartphoneID++;
@@ -85,7 +76,7 @@ ws.on('connection', socket => {
           // scratchにIDを割り振る
           var newID = scratchID;
           var res = {scratch_ID : newID, request_num : header.REQUEST.getID};
-          if (isAccessOK(newID)) {
+          if (isAccessOK(TYPE.scratch, newID)) {
             scratchSockets[newID.toString()] =  socket;
             scratchID++;
           } else {
@@ -95,15 +86,17 @@ ws.on('connection', socket => {
           }
           socket.send(JSON.stringify(res));
           break;
+
         case REQUEST.connect:
           // スマホへ命令するデータを送る
           if (!sendData(TYPE.smartphone, receivedData[DATA_NAME.smartphone_ID], getOrderData(receivedData))) {
-            socket.send(JSON.stringify(header.sensorData));
+            var res = {smartphone_ID : 0, request_num : header.REQUEST.connect};
+            socket.send(JSON.stringify(res));
           }
           break;
         
         case REQUEST.close:
-          var ID = receivedData[DATA_NAME.ID];
+          var ID = receivedData[DATA_NAME.scratch_ID];
           delete scratchSockets[ID.toString()];
           console.log(ID + "のscratchSocketを削除した");
       }  
@@ -140,9 +133,25 @@ function sendData(type, ID, data) {
   }
 }
 
-function isAccessOK(ID) {
-  if (0 < ID && ID < MAX_ACCESS_NUM) return true;
-  else false;
+function isAccessOK(type, ID) {
+  switch(type) {
+    case TYPE.smartphone:
+      console.log("smartphone_access = " + Object.keys(smartphoneSockets).length);
+      if (Object.keys(smartphoneSockets).length >= MAX_ACCESS_NUM) {
+        return false;
+      } else return true;
+      break;
+
+    case TYPE.scratch:
+      console.log("scratch_access = " + Object.keys(scratchSockets).length);
+    if (Object.keys(scratchSockets).length >= MAX_ACCESS_NUM) {
+        return false;
+      } else return true;
+      break;
+    
+    default:
+      return false;
+  }
 }
 
 function existSocket(type, ID) {

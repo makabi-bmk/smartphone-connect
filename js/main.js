@@ -5,7 +5,7 @@ var isCommunicatable = true;
 
 
 window.onload = function() {
-    
+
     resetAll();
     setScreenSize();
     document.getElementById("body").style.backgroundSize = screen.width + "px " + screen.height + "px";
@@ -33,10 +33,16 @@ con.onmessage = function(ms) {
         case REQUEST.none:
             break;
         case REQUEST.getID:
-            sensorData.smartphone_ID = receivedData[DATA_NAME.smartphone_ID];
-            alert("IDは" + sensorData.smartphone_ID + "です");
-            var IDtext = document.getElementById("ID");
-            IDtext.innerHTML = "ID : " + sensorData.smartphone_ID;
+            var status = receivedData["status"];
+
+            if (status == 500) {
+                alert(receivedData["message"]);
+            } else {
+                sensorData.smartphone_ID = receivedData[DATA_NAME.smartphone_ID];
+                alert("IDは" + sensorData.smartphone_ID + "です");
+                var IDtext = document.getElementById("ID");
+                IDtext.innerHTML = "ID : " + sensorData.smartphone_ID;    
+            }
             break;
 
         case REQUEST.connect:
@@ -80,7 +86,6 @@ function sendData(request_num) {
     }
 }
 
-// これ動いてないんじゃないかな
 window.addEventListener("beforeunload", function(e) {
     sendData(REQUEST.close);
     con.close();
