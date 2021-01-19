@@ -72,11 +72,10 @@ function sendData(request_num) {
     console.log('送るデータ:' + JSON.stringify(sensorData));
     try {
         con.send(JSON.stringify(sensorData));
-        //sleep(5000);
         isCommunicatable = false;
     } catch (error) {
         console.log(error);
-        //location.reload(true);
+        sendData(request_num);
     }
 }
 
