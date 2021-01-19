@@ -69,7 +69,7 @@ ws.on('connection', socket => {
           break;
         
         case REQUEST.close:
-          var ID = receivedData[DATA_NAME.ID];
+          var ID = receivedData[DATA_NAME.smartphone_ID];
           delete smartphoneSockets[ID.toString()];
           console.log(ID + "のsmartphoneSocketを削除した");
       }
