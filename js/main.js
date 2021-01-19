@@ -5,6 +5,15 @@ var isCommunicatable = true;
 
 
 window.onload = function() {
+
+    //スーパーリロードする
+    if (window.name != "any") {
+        window.name = "any";
+        location.reload(true);
+    } else {
+        window.name = "";
+    }
+
     resetAll();
     setScreenSize();
     document.getElementById("body").style.backgroundSize = screen.width + "px " + screen.height + "px";
@@ -15,7 +24,7 @@ window.onload = function() {
         };
     } catch (error) {
         console.log("error:" + error);
-
+        alert("接続でエラーが発生しました。もう一度サイトを読み込んでください。");
     }
     //ここ数秒おきにきくことにしよう
     sendData(REQUEST.getID);
@@ -75,7 +84,7 @@ function sendData(request_num) {
         isCommunicatable = false;
     } catch (error) {
         console.log(error);
-        sendData(request_num);
+       alert("接続でエラーが発生しました。もう一度サイトを読み込んでください。");
     }
 }
 
@@ -83,5 +92,5 @@ function sendData(request_num) {
 window.addEventListener("beforeunload", function(e) {
     sendData(REQUEST.close);
     con.close();
-    e.returnValue = "ページを移動します";
+    //e.returnValue = "ページを移動します";
 }, false);
