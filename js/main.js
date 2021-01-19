@@ -80,7 +80,7 @@ function sendData(request_num) {
 
 // これ動いてないんじゃないかな
 window.addEventListener("beforeunload", function(e) {
-    sendData(REQUEST.none);
+    sendData(REQUEST.close);
     con.close();
     e.returnValue = "ページを移動します";
-}, false)
+}, false);

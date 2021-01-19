@@ -38,7 +38,6 @@ ws.on('connection', socket => {
       console.log("送信者:スマホ");
       switch(request_num) {
         case REQUEST.none:
-          console.log("スマホからの接続きれた");
           //これブロードキャスト通信できる
           /*
           ws.clients.forEach(client => {
@@ -70,7 +69,9 @@ ws.on('connection', socket => {
           break;
         
         case REQUEST.close:
-
+          var ID = receivedData[DATA_NAME.ID];
+          delete smartphoneSockets[ID.toString()];
+          console.log(ID + "のsmartphoneSocketを削除した");
       }
     }
 
@@ -100,6 +101,11 @@ ws.on('connection', socket => {
             socket.send(JSON.stringify(header.sensorData));
           }
           break;
+        
+        case REQUEST.close:
+          var ID = receivedData[DATA_NAME.ID];
+          delete scratchSockets[ID.toString()];
+          console.log(ID + "のscratchSocketを削除した");
       }  
     }
     //socket.send(JSON.stringify(res));
