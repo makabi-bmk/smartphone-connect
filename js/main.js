@@ -5,17 +5,7 @@ var isCommunicatable = true;
 
 
 window.onload = function() {
-
-    //スーパーリロードする
     
-    if (window.name != "any") {
-        window.name = "any";
-        location.reload(true);
-    } else {
-        window.name = "";
-    }
-    
-
     resetAll();
     setScreenSize();
     document.getElementById("body").style.backgroundSize = screen.width + "px " + screen.height + "px";
