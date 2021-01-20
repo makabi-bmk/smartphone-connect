@@ -1,5 +1,5 @@
 // 画像の数
-const IMAGE_NUM = 12;
+const IMAGE_NUM = 14;
 // 背景画像の数
 const BACK_IMAGE_NUM = 13;
 // オブジェクトのサイズの上限
