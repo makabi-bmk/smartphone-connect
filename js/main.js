@@ -1,6 +1,7 @@
 // const { REQUEST } = require("./header");
 
 const con = new WebSocket('ws://localhost:8081/');
+// const con = new WebSocket('http://34.83.48.34/smartpnone:8081')
 var isCommunicatable = true;
 
 
