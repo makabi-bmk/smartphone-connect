@@ -59,7 +59,7 @@ con.onmessage = function(ms) {
 function orderEvent(data) {
     var flag = data[DATA_NAME.flag];            
             if (flag & 1) resetAll();
-            else {
+            // else {
                 if (flag & 2)    changeBackImage(data[DATA_NAME.back_image_num]);
                 if (flag & 4)    changeImage(data[DATA_NAME.image_num]);
                 if (flag & 8)    changeMessage(data[DATA_NAME.message]);
@@ -70,7 +70,7 @@ function orderEvent(data) {
                 if (flag & 256)  rotateImage(data[DATA_NAME.angle]);
                 if (flag & 512)  changeButtonText(data[DATA_NAME.button_text]);
                 if (flag & 1024) changeVisibility(data[DATA_NAME.view]);
-            }
+            // }
 }
 
 function sendData(request_num) {
