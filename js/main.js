@@ -1,7 +1,7 @@
 // const { REQUEST } = require("./header");
 
 // const con = new WebSocket('ws://localhost:8081/');
-const con = new WebSocket('http://smartconnect.nitoc-ict.com/smartphone');
+const con = new WebSocket('ws://smartconnect.nitoc-ict.com/smartphone');
 var isCommunicatable = true;
 
 
