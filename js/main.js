@@ -2,7 +2,7 @@
 
 // const con = new WebSocket('ws://localhost:8081/');
 //const con = new WebSocket('ws://smartconnect.nitoc-ict.com/smartphone');
-const con = new WebSocket('ws://172.20.10.4:8081')
+const con = new WebSocket('ws://192.168.11.102:8081')
 var isCommunicatable = true;
 
 
@@ -14,14 +14,14 @@ window.onload = function() {
 
     try {
         con.onopen = function() {
-            console.log('coを開始しました');
+            console.log('coを開始しました');    
+            sendData(REQUEST.getID);
         };
     } catch (error) {
         console.log("error:" + error);
         alert("接続でエラーが発生しました。もう一度サイトを読み込んでください。");
     }
     //ここ数秒おきにきくことにしよう
-    sendData(REQUEST.getID);
 };
 
 con.onmessage = function(ms) {

@@ -105,7 +105,7 @@ function resetAll() {
     setInputText("");
     changeButtonText("ボタン");
     rotateImage(DEFAULT_ANGLE);
-    changeImage(DEFAULT_SIZE);
+    changeImage(0);
     changeBackImage(0);
     changeImageSize(60);
     changeImagePosition(DEFAULT_POS_Y, DEFAULT_POS_X);
