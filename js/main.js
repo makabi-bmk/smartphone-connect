@@ -2,7 +2,7 @@
 
 // const con = new WebSocket('ws://localhost:8081/');
 //const con = new WebSocket('ws://smartconnect.nitoc-ict.com/smartphone');
-const con = new WebSocket('ws://192.168.11.102:8081')
+const con = new WebSocket('ws://172.20.10.5:8081')
 var isCommunicatable = true;
 
 

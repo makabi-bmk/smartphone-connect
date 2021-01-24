@@ -49,7 +49,7 @@ function changeBackImage(num) {
 function changeImageSize(size) {
     console.log("大きさ:" + size);
     var image = document.getElementById("image");
-    if (0 < size && size < MAX_SIZE) {
+    if (0 <= size && size <= MAX_SIZE) {
         image.style.width = size + "%";
         sensorData.size = size;
     }

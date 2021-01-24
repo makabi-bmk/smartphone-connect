@@ -1,15 +1,15 @@
 // 画像の数
-const IMAGE_NUM = 14;
+const IMAGE_NUM = 37;
 // 背景画像の数
 const BACK_IMAGE_NUM = 13;
 // オブジェクトのサイズの上限
-const MAX_SIZE = 100;
+const MAX_SIZE = 150;
 // アラートで表示する文字数の上限
-const MAX_ALERT_LENGTH = 100;
+const MAX_ALERT_LENGTH = 20;
 // ボタンの文字数の上限
-const MAX_BUTTON_TEXT_LENGTH = 30;
+const MAX_BUTTON_TEXT_LENGTH = 8;
 // メッセージの文字数の上限
-const MAX_MESSAGE_LENGTH = 100;
+const MAX_MESSAGE_LENGTH = 20;
 
 // オブジェクトの大きさと角度の初期値
 const DEFAULT_SIZE = 60;
